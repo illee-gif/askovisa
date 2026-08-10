@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASKOVISA | 이주민·난민을 위한 AI 비자 안내 챗봇</title>
+<meta name="description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 9개 언어로 제공합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#161616;
+    --panel:#1f1f20;
+    --panel-2:#2a2a2b;
+    --charcoal:#4c4c4e;
+    --charcoal-line:#5c5c5e;
+    --gold:#ffd668;
+    --gold-dim:rgba(255,214,104,0.14);
+    --gold-line:rgba(255,214,104,0.35);
+    --ink:#f3f1ea;
+    --muted:#a3a3a5;
+    --muted-2:#79797b;
+    --line:rgba(255,255,255,0.12);
+    --sans:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+    --mono:'JetBrains Mono','Apple SD Gothic Neo',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .container{width:100%;max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media (max-width:640px){ .container{padding:0 20px;} }
+  section{padding:120px 0;}
+  @media (max-width:900px){ section{padding:88px 0;} }
+  @media (max-width:640px){ section{padding:64px 0;} }
+  .mono{font-family:var(--mono);}
+  .cap{
+    font-family:var(--mono);text-transform:uppercase;letter-spacing:0.12em;font-size:12px;font-weight:600;
+    color:var(--gold);
+  }
+  .divider{height:1px;background:var(--line);width:100%;}
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:80;
+    background:rgba(22,22,22,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 32px;max-width:1180px;margin:0 auto;
+  }
+  @media (max-width:640px){ .nav-inner{padding:16px 20px;} }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-0.02em;}
+  .brand .logo-mark{width:32px;height:32px;}
+  .nav-links{display:flex;gap:28px;}
+  .nav-links a{
+    font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);
+  }
+  .nav-links a::before{content:"[ ";color:var(--muted-2);}
+  .nav-links a::after{content:" ]";color:var(--muted-2);}
+  .nav-links a:hover{color:var(--gold);}
+  @media (max-width:800px){ .nav-links{display:none;} }
+  .nav-cta{
+    font-family:var(--mono);font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+    background:var(--gold);color:#161616;padding:11px 20px;border-radius:2px;white-space:nowrap;
+  }
+  .nav-cta:hover{background:#ffe08a;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:100px 0 0;position:relative;overflow:hidden;}
+  .hero-top{display:grid;grid-template-columns:1.2fr 0.8fr;gap:60px;align-items:end;margin-bottom:64px;}
+  @media (max-width:900px){ .hero-top{grid-template-columns:1fr;gap:32px;} }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--gold-line);color:var(--gold);
+    padding:7px 14px;border-radius:999px;font-family:var(--mono);font-size:12px;font-weight:600;
+    letter-spacing:0.04em;margin-bottom:28px;
+  }
+  .hero h1{
+    font-size:clamp(40px,5.6vw,72px);line-height:1.08;font-weight:700;margin:0;letter-spacing:-0.02em;
+  }
+  .hero h1 .out{color:var(--gold);}
+  .hero-side p{
+    font-family:var(--mono);font-size:15px;color:var(--muted);margin:0;line-height:1.8;
+  }
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px;}
+  .btn-solid{
+    display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#161616;
+    padding:15px 26px;border-radius:2px;font-weight:700;font-size:14.5px;font-family:var(--sans);
+  }
+  .btn-solid:hover{background:#ffe08a;}
+  .btn-line{
+    display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--ink);
+    padding:15px 26px;border:1px solid var(--charcoal-line);border-radius:2px;font-weight:600;font-size:14.5px;
+  }
+  .btn-line:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-solid svg,.btn-line svg{width:18px;height:18px;}
+
+  /* mosaic */
+  .mosaic{
+    display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,150px);gap:2px;
+    border:1px solid var(--line);
+  }
+  @media (max-width:900px){ .mosaic{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,140px);} }
+  @media (max-width:560px){ .mosaic{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(6,130px);} }
+  .m-cell{
+    background:var(--panel);padding:16px;display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;
+  }
+  .m-cell.gold{background:var(--gold);color:#161616;}
+  .m-cell.charcoal{background:var(--charcoal);}
+  .m-cell.big{grid-column:span 2;grid-row:span 2;}
+  @media (max-width:900px){ .m-cell.big{grid-column:span 2;grid-row:span 2;} }
+  @media (max-width:560px){ .m-cell.big{grid-column:span 2;grid-row:span 2;} }
+  .m-cell .m-icon{width:22px;height:22px;opacity:0.9;}
+  .m-cell .m-label{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);}
+  .m-cell.gold .m-label{color:rgba(22,22,22,0.65);}
+  .m-cell .m-big{font-family:var(--sans);font-weight:700;font-size:26px;letter-spacing:-0.01em;}
+  .m-chat{display:flex;flex-direction:column;gap:8px;height:100%;justify-content:center;}
+  .m-bubble{font-family:var(--mono);font-size:10.5px;line-height:1.5;padding:8px 10px;border-radius:8px;max-width:92%;}
+  .m-bubble.u{align-self:flex-end;background:var(--gold);color:#161616;}
+  .m-bubble.b{align-self:flex-start;background:var(--panel-2);color:var(--muted);border:1px solid var(--line);}
+
+  /* ---------- Section heads ---------- */
+  .row-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap;}
+  .row-head h2{font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-0.02em;margin:10px 0 0;}
+  .link-underline{
+    font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--ink);border-bottom:1px solid var(--muted-2);padding-bottom:6px;white-space:nowrap;
+  }
+  .link-underline:hover{color:var(--gold);border-color:var(--gold);}
+  .arrow-link{
+    display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;
+    text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);
+  }
+  .arrow-link svg{width:14px;height:14px;}
+  .arrow-link:hover{color:var(--gold);}
+
+  /* ---------- Purpose / quote ---------- */
+  .quote{
+    font-size:clamp(24px,3.4vw,38px);font-weight:600;letter-spacing:-0.01em;line-height:1.4;margin:0 0 40px;
+    max-width:920px;
+  }
+  .quote .hl{color:var(--gold);}
+  .purpose-foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start;}
+  .purpose-foot p{font-family:var(--mono);font-size:14px;color:var(--muted);max-width:380px;margin:0;line-height:1.8;}
+  .stat-row{display:flex;gap:48px;flex-wrap:wrap;}
+  .stat b{display:block;font-size:34px;font-weight:700;color:var(--gold);}
+  .stat span{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-2);}
+
+  /* ---------- Feature cards (project-card style) ---------- */
+  .feature-card{margin-bottom:80px;}
+  .feature-card:last-child{margin-bottom:0;}
+  .feature-visual{
+    background:var(--panel);border:1px solid var(--line);height:320px;position:relative;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  @media (max-width:640px){ .feature-visual{height:220px;} }
+  .feature-visual .num-bg{
+    font-family:var(--mono);font-weight:700;font-size:220px;color:var(--panel-2);position:absolute;
+    line-height:1;user-select:none;
+  }
+  @media (max-width:640px){ .feature-visual .num-bg{font-size:140px;} }
+  .feature-visual .f-icon{width:64px;height:64px;color:var(--gold);position:relative;z-index:1;}
+  .feature-visual .tags{
+    position:absolute;bottom:14px;right:14px;display:flex;gap:8px;z-index:2;flex-wrap:wrap;justify-content:flex-end;
+  }
+  .pill{
+    font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:0.05em;
+    background:rgba(22,22,22,0.75);color:var(--ink);padding:6px 11px;border-radius:999px;
+    border:1px solid rgba(255,255,255,0.12);
+  }
+  .feature-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-top:22px;flex-wrap:wrap;}
+  .feature-meta h3{font-size:24px;font-weight:700;margin:0 0 8px;letter-spacing:-0.01em;}
+  .feature-meta p{font-family:var(--mono);font-size:13.5px;color:var(--muted);margin:0;max-width:520px;line-height:1.7;}
+
+  /* ---------- Numbered list ---------- */
+  .num-list{margin-top:0;}
+  .num-row{
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:26px 0;border-bottom:1px solid var(--line);
+  }
+  .num-row:first-child{border-top:1px solid var(--line);}
+  .num-row .left{display:flex;align-items:center;gap:24px;}
+  .num-row .idx{font-family:var(--mono);color:var(--gold);font-size:13px;font-weight:700;}
+  .num-row .title{font-size:19px;font-weight:600;letter-spacing:-0.01em;}
+  .num-row .tag{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.06em;}
+
+  /* ---------- Language grid (logo-grid style) ---------- */
+  .lang-grid{display:grid;grid-template-columns:repeat(5,1fr);}
+  @media (max-width:800px){ .lang-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:520px){ .lang-grid{grid-template-columns:repeat(2,1fr);} }
+  .lang-cell{
+    aspect-ratio:1.3;border:1px solid var(--line);margin:-1px 0 0 -1px;
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;
+    font-weight:600;font-size:16px;transition:background .15s ease,color .15s ease;
+  }
+  .lang-cell:hover{background:var(--gold-dim);color:var(--gold);}
+
+  /* ---------- Logo meaning (single mark story) ---------- */
+  .logo-story{display:flex;align-items:center;gap:56px;flex-wrap:wrap;}
+  .logo-story-mark{
+    width:140px;height:140px;border-radius:50%;background:var(--gold);flex:none;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -20px rgba(255,214,104,0.35);
+  }
+  .logo-story-mark svg{width:60px;height:60px;color:#161616;}
+  @media (max-width:560px){ .logo-story-mark{width:104px;height:104px;} .logo-story-mark svg{width:44px;height:44px;} }
+  .logo-story-text{font-size:clamp(20px,2.6vw,28px);font-weight:600;line-height:1.55;letter-spacing:-0.01em;max-width:640px;margin:0;}
+  .logo-story-text .hl{color:var(--gold);}
+  .logo-story-cap{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:18px;letter-spacing:0.02em;}
+
+  /* ---------- Steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);}
+  @media (max-width:800px){ .steps{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .steps{grid-template-columns:1fr;} }
+  .step{padding:36px 28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .step .n{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:20px;}
+  .step h4{margin:0 0 10px;font-size:17px;font-weight:700;}
+  .step p{margin:0;font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.7;}
+
+  /* ---------- CTA ---------- */
+  .cta-wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;}
+  .cta-wrap h2{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-0.02em;margin:0 0 20px;max-width:640px;}
+  .cta-wrap .lead{font-family:var(--mono);color:var(--muted);font-size:14.5px;max-width:420px;margin:0;}
+  .cta-right{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);padding:80px 0 32px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;}
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr;gap:36px;} }
+  .footer-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;margin-bottom:16px;}
+  .footer-brand .logo-mark{width:28px;height:28px;}
+  footer p.desc{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted);margin:0;max-width:340px;}
+  footer h5{
+    font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-2);
+    margin:0 0 18px;
+  }
+  .contact-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;font-size:14px;font-family:var(--mono);}
+  .contact-list a:hover{color:var(--gold);}
+  .disclaimer{
+    margin-top:20px;font-family:var(--mono);font-size:11.5px;color:var(--muted-2);
+    border:1px solid var(--line);padding:14px 16px;border-radius:4px;max-width:400px;line-height:1.7;
+  }
+  .footer-bottom{
+    border-top:1px solid var(--line);margin-top:64px;padding-top:24px;
+    font-family:var(--mono);font-size:12px;color:var(--muted-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    text-transform:uppercase;letter-spacing:0.05em;
+  }
+
+  /* ---------- Scroll progress ---------- */
+  .scroll-progress{position:fixed;top:0;left:0;height:2px;background:var(--gold);width:0%;z-index:300;}
+
+  /* ---------- Mobile menu ---------- */
+  .menu-btn{
+    display:none;background:none;border:none;color:var(--ink);font-family:var(--mono);
+    font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;padding:8px;
+  }
+  @media (max-width:800px){ .menu-btn{display:inline-flex;} }
+  .mobile-nav{
+    position:fixed;inset:0;background:rgba(14,14,14,0.98);z-index:200;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .mobile-nav.open{opacity:1;pointer-events:auto;}
+  .mobile-nav nav{display:flex;flex-direction:column;align-items:center;gap:24px;}
+  .mobile-nav nav a{font-family:var(--sans);font-size:30px;font-weight:700;letter-spacing:-0.01em;color:var(--ink);}
+  .mobile-nav nav a:hover{color:var(--gold);}
+  .mobile-nav .mnav-cta{
+    margin-top:10px;background:var(--gold);color:#161616;padding:14px 28px;border-radius:2px;font-size:16px;
+  }
+  .mobile-nav-close{
+    position:absolute;top:24px;right:28px;background:none;border:none;color:var(--muted);
+    font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;
+  }
+  .mobile-nav-close:hover{color:var(--gold);}
+
+  /* ---------- Nav scrollspy ---------- */
+  .nav-links a.active{color:var(--gold);}
+
+  /* ---------- Hero phone (scroll parallax, app UI) ---------- */
+  .hero-phone-stage{
+    display:flex;justify-content:center;align-items:center;
+    padding:72px 24px 80px;position:relative;z-index:2;overflow:hidden;border-radius:36px;
+    background:
+      radial-gradient(120% 90% at 50% -12%, rgba(255,250,240,0.24), transparent 55%),
+      radial-gradient(100% 80% at 85% 12%, rgba(214,178,199,0.12), transparent 55%),
+      linear-gradient(180deg, rgba(18,14,16,0.14) 0%, rgba(18,14,16,0.4) 55%, rgba(10,8,9,0.74) 100%),
+      radial-gradient(140% 110% at 50% 122%, rgba(14,12,13,0.88), transparent 60%),
+      url("assets/desk-photo.jpg");
+    background-size:auto,auto,auto,auto,cover;
+    background-position:0 0,0 0,0 0,0 0,center 42%;
+    background-repeat:no-repeat;
+  }
+  @media (max-width:560px){ .hero-phone-stage{padding:52px 16px 60px;border-radius:26px;} }
+  .hero-phone-stage::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .hero-phone{--phone-w:250px;--phone-d:18px;width:var(--phone-w);perspective:1300px;will-change:transform;}
+  @media (max-width:560px){ .hero-phone{--phone-w:220px;} }
+  .hp-flipper{position:relative;width:100%;transform-style:preserve-3d;cursor:grab;will-change:transform;}
+  .hp-flipper.dragging{cursor:grabbing;}
+  .hp-flipper.dragging, .hp-flipper.dragging *{user-select:none;}
+  .hp-face{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+  .hp-face-front{
+    background:linear-gradient(175deg,#f8f3f5 0%,#e9cddc 22%,#d2a8c1 50%,#ad7f9f 78%,#93677f 100%);
+    border-radius:34px;padding:10px;overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.7),inset 0 0 0 1px rgba(255,255,255,0.35);
+    transform:translateZ(calc(var(--phone-d) / 2));
+  }
+  .hp-face-back{
+    position:absolute;inset:0;transform:rotateY(180deg) translateZ(calc(var(--phone-d) / 2));
+    background:linear-gradient(175deg,#faf5f7 0%,#eed3e2 20%,#d6acc6 45%,#b489a5 70%,#8f6685 100%);
+    border-radius:34px;overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.65),inset 0 0 0 1px rgba(255,255,255,0.3);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hp-edge{
+    position:absolute;top:32px;bottom:32px;height:auto;width:var(--phone-d);
+    border-radius:calc(var(--phone-d) / 2);
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    background:linear-gradient(180deg,#fcf7f9 0%,#e9cddc 12%,#8a6580 50%,#e9cddc 88%,#fcf7f9 100%);
+  }
+  .hp-edge-right{left:calc(100% - (var(--phone-d) / 2));transform:rotateY(90deg);}
+  .hp-edge-left{left:calc(0px - (var(--phone-d) / 2));transform:rotateY(-90deg);}
+  .hp-back-cam{
+    position:absolute;top:24px;left:22px;width:60px;height:60px;border-radius:18px;
+    background:linear-gradient(145deg,rgba(255,255,255,0.45),rgba(0,0,0,0.15));
+  }
+  .hp-back-cam .lens{
+    position:absolute;width:25px;height:25px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#4a4a4c,#0c0c0d 70%);
+    box-shadow:0 0 0 3px rgba(255,255,255,0.3) inset;
+  }
+  .hp-back-cam .lens-1{top:6px;left:6px;}
+  .hp-back-cam .lens-2{bottom:6px;right:6px;}
+  .hp-back-logo{width:50px;height:50px;color:rgba(255,255,255,0.6);}
+  .hp-back-text{
+    position:absolute;bottom:26px;left:0;right:0;text-align:center;
+    font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:0.1em;color:rgba(80,55,70,0.4);
+  }
+  .hp-hint{
+    display:flex;align-items:center;justify-content:center;gap:8px;margin-top:22px;
+    font-family:var(--mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.08em;
+  }
+  .hp-hint svg{width:13px;height:13px;}
+  .hp-screen{background:#101010;border-radius:24px;overflow:hidden;aspect-ratio:9/18.3;display:flex;flex-direction:column;}
+  .hp-status{
+    display:flex;justify-content:space-between;align-items:center;padding:10px 16px 2px;
+    font-family:var(--sans);font-size:10.5px;font-weight:700;color:var(--ink);
+  }
+  .hp-status svg{color:var(--ink);}
+  .hp-header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px 12px;border-bottom:1px solid var(--line);}
+  .hp-header .hp-logo{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-weight:700;font-size:12.5px;color:var(--ink);}
+  .hp-header .hp-logo svg{width:18px;height:18px;flex:none;}
+  .hp-lang{display:flex;align-items:center;gap:4px;background:var(--panel-2);border-radius:999px;padding:5px 9px;font-family:var(--sans);font-size:9.5px;color:var(--muted);}
+  .hp-screen-content{
+    flex:1;padding:12px 16px 8px;display:flex;flex-direction:column;align-items:center;text-align:center;
+    position:relative;overflow:hidden;transition:opacity .25s ease;
+  }
+  .hp-screen-content.fade{opacity:0;}
+  .hp-badge-circle{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin:0 0 8px;flex:none;}
+  .hp-badge-circle svg{width:16px;height:16px;color:#161616;}
+  .hp-headline{font-family:var(--sans);font-weight:700;font-size:14px;line-height:1.3;color:var(--ink);margin:0 0 5px;}
+  .hp-sub{font-family:var(--sans);font-size:9.5px;color:var(--muted);margin:0 0 10px;line-height:1.45;}
+  .hp-cardlist{display:flex;flex-direction:column;gap:7px;width:100%;}
+  .hp-card{
+    display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:12px;padding:8px 11px;text-align:left;
+  }
+  .hp-card .ic{width:23px;height:23px;border-radius:8px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;flex:none;}
+  .hp-card .ic svg{width:12px;height:12px;color:var(--gold);}
+  .hp-card .tx{display:flex;flex-direction:column;min-width:0;}
+  .hp-card .tx b{font-family:var(--sans);font-size:10.5px;font-weight:700;color:var(--ink);}
+  .hp-card .tx span{font-family:var(--sans);font-size:8.5px;color:var(--muted-2);}
+  .hp-card .chev{margin-left:auto;color:var(--muted-2);width:14px;height:14px;flex:none;}
+  .hp-chips{display:flex;flex-direction:column;gap:6px;width:100%;}
+  .hp-chip{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:7px 10px;
+    font-family:var(--sans);font-size:9px;color:var(--ink);text-align:left;line-height:1.35;
+  }
+  .hp-bottom{margin-top:auto;width:100%;}
+  .hp-back{font-family:var(--sans);font-size:9px;color:var(--muted-2);margin:6px 0 4px;text-align:left;}
+  .hp-inputbar{
+    display:flex;align-items:center;gap:8px;background:var(--panel-2);
+    border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 12px;
+  }
+  .hp-input-text{flex:1;font-family:var(--sans);font-size:9px;color:var(--muted-2);text-align:left;min-width:0;}
+  .hp-send{
+    width:26px;height:26px;min-width:26px;flex:none;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.25);
+  }
+  .hp-send svg{width:12px;height:12px;color:#161616;}
+  .hp-tabbar{display:flex;justify-content:space-around;padding:9px 6px;border-top:1px solid var(--line);}
+  .hp-tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--sans);font-size:7.5px;color:var(--muted-2);}
+  .hp-tab.active{color:var(--gold);}
+  .hp-tab svg{width:15px;height:15px;}
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- Language demo ---------- */
+  .lang-cell{cursor:pointer;}
+  .lang-cell.active{background:var(--gold);color:#161616;}
+  .greet-panel{
+    margin-top:24px;border:1px solid var(--line);border-radius:4px;padding:22px 26px;background:var(--panel);
+  }
+  .greet-panel p{font-family:var(--mono);font-size:15px;margin:0;color:var(--ink);min-height:1.6em;}
+
+  /* ---------- Back to top ---------- */
+  .to-top{
+    position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;
+    background:var(--gold);color:#161616;border:none;font-size:18px;font-weight:700;cursor:pointer;
+    opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:150;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.5);
+  }
+  .to-top.show{opacity:1;pointer-events:auto;}
+  .to-top:hover{transform:translateY(-3px);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .hero-phone{transform:none !important;}
+    .hp-screen-content{transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="30" height="30" rx="9" fill="#4c4c4e"/>
+        <path d="M16 6c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z" fill="#ffd668"/>
+      </svg>
+      ASKOVISA
+    </div>
+    <nav class="nav-links">
+      <a href="#about">소개</a>
+      <a href="#features">특징</a>
+      <a href="#languages">언어</a>
+      <a href="#contact">문의</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="메뉴 열기">[ MENU ]</button>
+    <a class="nav-cta" href="#download">앱 다운로드</a>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose" type="button" aria-label="메뉴 닫기">[ CLOSE ]</button>
+  <nav>
+    <a href="#about">소개</a>
+    <a href="#features">특징</a>
+    <a href="#languages">언어</a>
+    <a href="#contact">문의</a>
+    <a href="#download" class="mnav-cta">앱 다운로드</a>
+  </nav>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-top">
+      <div>
+        <div class="badge">★ 공익법센터 어필 · 2025.12.11 출시</div>
+        <h1>이주민과 난민은<br>답을 <span class="out">듣기 전에</span><br>먼저 이해받아야 한다<span style="color:var(--gold);">®</span></h1>
+      </div>
+      <div class="hero-side">
+        <p>
+          ASKOVISA(ASK + KO + VISA)는 한국 입국 사증, 체류자격, 통장개설·4대보험 등
+          금융서비스에 관한 정확한 정보를 누구나 무료로, 9개 언어로 물어볼 수 있게
+          만든 AI 챗봇입니다.
+        </p>
+        <div class="hero-btns">
+          <a class="btn-solid" href="https://apps.apple.com/kr/app/askovisa-korea-entry-chatbot/id6753971986" target="_blank" rel="noopener">
+            App Store
+          </a>
+          <a class="btn-line" href="https://play.google.com/store/apps/details?id=kr.or.askovisa" target="_blank" rel="noopener">
+            Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-phone-stage">
+      <div class="hero-phone" id="heroPhone">
+      <div class="hp-flipper" id="hpFlipper">
+      <div class="hp-face hp-face-front">
+        <div class="hp-screen">
+          <div class="hp-status">
+            <span>9:41</span>
+            <svg width="34" height="11" viewBox="0 0 34 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="6" width="2" height="5" rx="0.5" fill="currentColor"/>
+              <rect x="3.5" y="4" width="2" height="7" rx="0.5" fill="currentColor"/>
+              <rect x="7" y="2" width="2" height="9" rx="0.5" fill="currentColor"/>
+              <rect x="10.5" y="0" width="2" height="11" rx="0.5" fill="currentColor"/>
+              <path d="M17 8.2a3.6 3.6 0 0 1 4.4 0M15.8 5.8a6 6 0 0 1 6.8 0" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="19.2" cy="10" r="0.9" fill="currentColor"/>
+              <rect x="25" y="1" width="8" height="9" rx="2" stroke="currentColor" stroke-width="1"/>
+              <rect x="26.2" y="2.2" width="5.6" height="6.6" rx="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="hp-header">
+            <div class="hp-logo">
+              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="30" height="30" rx="9" fill="#2f2f30"/>
+                <path d="M16 7c0 4.2 1.3 7.4 4.6 9-3.3 1.6-4.6 4.8-4.6 9-0-4.2-1.3-7.4-4.6-9 3.3-1.6 4.6-4.8 4.6-9Z" fill="#ffd668"/>
+              </svg>
+              ASKOVISA
+            </div>
+            <div class="hp-lang">한국어 ⌄</div>
+          </div>
+          <div class="hp-screen-content" id="hpScreen"></div>
+          <div class="hp-tabbar">
+            <div class="hp-tab active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H8l-5 5v-5a3 3 0 0 1 0-11Z"/></svg>
+              AI채팅
+            </div>
+            <div class="hp-tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+              서비스
+            </div>
+            <div class="hp-tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+              알림
+            </div>
+            <div class="hp-tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              내정보
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hp-face hp-face-back">
+        <div class="hp-back-cam"><span class="lens lens-1"></span><span class="lens lens-2"></span></div>
+        <svg class="hp-back-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z"/></svg>
+        <div class="hp-back-text">ASKOVISA</div>
+      </div>
+      <div class="hp-edge hp-edge-right"></div>
+      <div class="hp-edge hp-edge-left"></div>
+      </div>
+      </div>
+    </div>
+    <div class="hp-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 5v7h7"/></svg>
+      드래그해서 360° 둘러보기
+    </div>
+
+    <div class="mosaic">
+      <div class="m-cell charcoal big">
+        <span class="m-label">Always Available</span>
+        <span class="m-big" style="font-size:22px;line-height:1.35;">누구나,<br>무료로,<br>24시간 언제든</span>
+      </div>
+      <div class="m-cell gold">
+        <span class="m-label">Free</span>
+        <span class="m-big">100%</span>
+      </div>
+      <div class="m-cell">
+        <svg class="m-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.8"><path d="M12 3l8 3.2v6.4c0 6-3.6 9.6-8 11.2-4.4-1.6-8-5.2-8-11.2V6.2L12 3Z"/></svg>
+        <span class="m-label">근거 제시 · 매뉴얼 캡처</span>
+      </div>
+      <div class="m-cell charcoal">
+        <svg class="m-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.8"><path d="M12 3l2.7 5.9 6.3.6-4.8 4.2 1.5 6.2L12 16.9l-5.7 3-1.5-6.2-4.8-4.2 6.3-.6L12 3Z"/></svg>
+        <span class="m-label">AI 기반 정확한 안내</span>
+      </div>
+      <div class="m-cell">
+        <span class="m-big">9</span>
+        <span class="m-label">지원 언어</span>
+      </div>
+      <div class="m-cell gold">
+        <svg class="m-icon" viewBox="0 0 24 24" fill="none" stroke="#161616" stroke-width="1.8"><path d="M3 5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H8l-5 5v-5a3 3 0 0 1 0-11Z"/></svg>
+        <span class="m-label">24/7 챗봇</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <p class="quote reveal">
+      이주민과 난민은 한국에서 체류자격, 사증, 금융서비스 등 생활에 꼭 필요한 정보를
+      본인의 언어로 얻기가 쉽지 않습니다. <span class="hl">ASKOVISA는 복잡한 행정 정보를
+      누구나 이해할 수 있는 방식으로 전달</span>하여 스스로 올바른 방향을 찾도록 돕습니다.
+    </p>
+    <div class="purpose-foot reveal">
+      <div class="stat-row">
+        <div class="stat"><b data-count="9" data-suffix="개">0개</b><span>지원 언어</span></div>
+        <div class="stat"><b data-count="100" data-suffix="%">0%</b><span>무료 이용</span></div>
+        <div class="stat"><b data-count="2" data-suffix="개">0개</b><span>플랫폼 iOS·Android</span></div>
+      </div>
+      <p>비영리 단체 공익법센터 어필이 개발했으며, 출입국·외국인정책본부 매뉴얼과<br>공개된 재판 자료를 학습해 근거에 기반한 답변을 제공합니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">Key Features</span>
+        <h2>5가지 핵심 특징</h2>
+      </div>
+      <a class="link-underline" href="#languages">지원 언어 보기</a>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-visual">
+        <span class="num-bg">01</span>
+        <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <div class="tags">
+          <span class="pill">Accuracy</span>
+          <span class="pill">Official Manual</span>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <h3>정확성 우선</h3>
+        <p>출입국·외국인정책본부의 공식 매뉴얼과 공개된 재판 자료를 학습하여, 근거에 기반한 정확한 답변을 제공합니다.</p>
+      </div>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-visual">
+        <span class="num-bg">02</span>
+        <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M4 4h16v12H8l-4 4V4Z"/><path d="M8 9h8M8 13h5"/></svg>
+        <div class="tags">
+          <span class="pill">Evidence</span>
+          <span class="pill">Screenshot</span>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <h3>명확한 근거 제시</h3>
+        <p>챗봇 답변의 근거가 되는 외국인 체류매뉴얼·사증매뉴얼 페이지를 직접 캡처하여 함께 보여줍니다.</p>
+      </div>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-visual">
+        <span class="num-bg">03</span>
+        <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+        <div class="tags">
+          <span class="pill">Non-profit</span>
+          <span class="pill">Free</span>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <h3>완전 무료</h3>
+        <p>비영리 단체인 공익법센터 어필이 개발하여, 이용료나 멤버십 없이 누구나 무료로 사용할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-visual">
+        <span class="num-bg">04</span>
+        <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/><circle cx="12" cy="12" r="9"/></svg>
+        <div class="tags">
+          <span class="pill">9 Languages</span>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <h3>다국어 지원</h3>
+        <p>영어, 중국어, 베트남어, 태국어, 우즈베키스탄어, 러시아어, 아랍어, 프랑스어, 한국어까지 9개 언어를 지원합니다.</p>
+      </div>
+    </div>
+
+    <div class="feature-card reveal">
+      <div class="feature-visual">
+        <span class="num-bg">05</span>
+        <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M12 22c4.4-1.6 8-5.2 8-11.2V4.2L12 1 4 4.2v6.6C4 16.8 7.6 20.4 12 22Z"/></svg>
+        <div class="tags">
+          <span class="pill">Guidance</span>
+        </div>
+      </div>
+      <div class="feature-meta">
+        <h3>현실적인 안내</h3>
+        <p>전문 상담을 대체하지는 않지만, 기본적인 정보를 제공해 올바른 방향으로 나아갈 수 있도록 안내합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">What We Cover</span>
+        <h2>주요 정보 제공 분야</h2>
+      </div>
+    </div>
+    <div class="num-list">
+      <div class="num-row reveal">
+        <div class="left"><span class="idx">01</span><span class="title">입국 사증(비자)</span></div>
+        <span class="tag">Entry Visa</span>
+      </div>
+      <div class="num-row reveal">
+        <div class="left"><span class="idx">02</span><span class="title">체류자격</span></div>
+        <span class="tag">Residence Status</span>
+      </div>
+      <div class="num-row reveal">
+        <div class="left"><span class="idx">03</span><span class="title">외국인등록</span></div>
+        <span class="tag">ARC Registration</span>
+      </div>
+      <div class="num-row reveal">
+        <div class="left"><span class="idx">04</span><span class="title">통장 개설</span></div>
+        <span class="tag">Bank Account</span>
+      </div>
+      <div class="num-row reveal">
+        <div class="left"><span class="idx">05</span><span class="title">4대 보험</span></div>
+        <span class="tag">Social Insurance</span>
+      </div>
+      <div class="num-row reveal">
+        <div class="left"><span class="idx">06</span><span class="title">체류 연장·변경</span></div>
+        <span class="tag">Extension / Change</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="languages">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">Multilingual</span>
+        <h2>9개 언어로 소통합니다</h2>
+      </div>
+    </div>
+    <div class="lang-grid reveal">
+      <div class="lang-cell" data-greet="안녕하세요! 무엇을 도와드릴까요?" tabindex="0" role="button">한국어</div>
+      <div class="lang-cell" data-greet="Hello! How can I help you today?" tabindex="0" role="button">English</div>
+      <div class="lang-cell" data-greet="你好!有什么可以帮您的吗?" tabindex="0" role="button">中文</div>
+      <div class="lang-cell" data-greet="Xin chào! Tôi có thể giúp gì cho bạn?" tabindex="0" role="button">Tiếng Việt</div>
+      <div class="lang-cell" data-greet="สวัสดี! มีอะไรให้ช่วยไหมคะ?" tabindex="0" role="button">ภาษาไทย</div>
+      <div class="lang-cell" data-greet="Salom! Sizga qanday yordam bera olaman?" tabindex="0" role="button">Oʻzbekcha</div>
+      <div class="lang-cell" data-greet="Здравствуйте! Как я могу вам помочь?" tabindex="0" role="button">Русский</div>
+      <div class="lang-cell" data-greet="مرحباً! كيف يمكنني مساعدتك؟" tabindex="0" role="button">العربية</div>
+      <div class="lang-cell" data-greet="Bonjour ! Comment puis-je vous aider ?" tabindex="0" role="button">Français</div>
+      <div class="lang-cell" style="color:var(--muted-2);cursor:default;">+ 계속 확장중</div>
+    </div>
+    <div class="greet-panel reveal">
+      <span class="cap" style="margin-bottom:8px;display:block;">Try It</span>
+      <p id="greetText">언어를 클릭하면 ASKOVISA가 그 언어로 인사해요 →</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">Our Logo</span>
+        <h2>로고에 담긴 의미</h2>
+      </div>
+    </div>
+
+    <div class="logo-story reveal">
+      <div class="logo-story-mark">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z"/></svg>
+      </div>
+      <div>
+        <p class="logo-story-text">
+          네 갈래로 뻗어나가는 별은 언어와 제도의 벽 앞에서 방향을 잃기 쉬운 이들에게
+          <span class="hl">가장 가까운 길을 밝혀주는 AI</span>를 상징합니다.
+          어디서 왔든, 어디로 향하든 — ASKOVISA는 그 별처럼 조용히 곁에서 길을 비춥니다.
+        </p>
+        <div class="logo-story-cap">ONE MARK, ONE PROMISE — 정확한 안내로 길을 밝힌다</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">How It Works</span>
+        <h2>이렇게 이용하세요</h2>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="n mono">01</div>
+        <h4>앱 다운로드</h4>
+        <p>App Store 또는 Google Play에서 ASKOVISA를 무료로 설치합니다.</p>
+      </div>
+      <div class="step reveal">
+        <div class="n mono">02</div>
+        <h4>언어 선택</h4>
+        <p>9개 언어 중 원하는 언어를 선택하고 편하게 대화를 시작합니다.</p>
+      </div>
+      <div class="step reveal">
+        <div class="n mono">03</div>
+        <h4>질문하기</h4>
+        <p>사증, 체류자격, 통장 개설, 4대보험 등 궁금한 내용을 자유롭게 물어봅니다.</p>
+      </div>
+      <div class="step reveal">
+        <div class="n mono">04</div>
+        <h4>근거와 함께 확인</h4>
+        <p>답변의 근거가 되는 공식 매뉴얼 캡처를 함께 확인하고 다음 방향을 계획합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="container">
+    <div class="cta-wrap reveal">
+      <div>
+        <span class="cap">Get Started</span>
+        <h2>지금, ASKOVISA를<br>만나보세요</h2>
+        <p class="lead">가입비도, 이용료도, 멤버십도 필요 없습니다.<br>지금 바로 다운로드하고 궁금한 것을 물어보세요.</p>
+      </div>
+      <div class="cta-right">
+        <a class="btn-solid" href="https://apps.apple.com/kr/app/askovisa-korea-entry-chatbot/id6753971986" target="_blank" rel="noopener">App Store에서 받기</a>
+        <a class="link-underline" href="https://play.google.com/store/apps/details?id=kr.or.askovisa" target="_blank" rel="noopener">Google Play에서 받기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="30" height="30" rx="9" fill="#4c4c4e"/>
+            <path d="M16 6c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z" fill="#ffd668"/>
+          </svg>
+          ASKOVISA
+        </div>
+        <p class="desc">이주민과 난민을 위한 무료 AI 비자·체류 안내 챗봇.<br>공익법센터 어필이 개발했습니다.</p>
+        <div class="disclaimer">
+          ※ ASKOVISA는 전문 법률 상담을 대체하지 않습니다. 개별 사안은 반드시 전문가 또는
+          관계 기관(하이코리아, 출입국·외국인청 등)의 확인을 받으시기 바랍니다.
+        </div>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul class="contact-list">
+          <li>+82-2-3478-0529</li>
+          <li>010-8325-0886</li>
+          <li><a href="mailto:info@apil.or.kr">info@apil.or.kr</a></li>
+          <li>서울 중구 소공로 35, 214호</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Download</h5>
+        <ul class="contact-list">
+          <li><a href="https://apps.apple.com/kr/app/askovisa-korea-entry-chatbot/id6753971986" target="_blank" rel="noopener">App Store →</a></li>
+          <li><a href="https://play.google.com/store/apps/details?id=kr.or.askovisa" target="_blank" rel="noopener">Google Play →</a></li>
+          <li><a href="https://apil.or.kr/notice/1112427516" target="_blank" rel="noopener">공지 원문 →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 공익법센터 어필 (APIL)</span>
+      <span>ASKOVISA — ASK + KO + VISA</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="맨 위로">↑</button>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Scroll progress + back-to-top + phone parallax (single rAF loop) ---------- */
+  var progressEl = document.getElementById('scrollProgress');
+  var toTopEl = document.getElementById('toTop');
+  var heroPhone = document.getElementById('heroPhone');
+  var phoneStage = heroPhone ? heroPhone.closest('.hero-phone-stage') : null;
+  var ticking = false;
+
+  function updateOnScroll(){
+    var doc = document.documentElement;
+    var scrollTop = doc.scrollTop || document.body.scrollTop;
+    var scrollHeight = doc.scrollHeight - doc.clientHeight;
+    if(progressEl){ progressEl.style.width = (scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0) + '%'; }
+    if(toTopEl){ toTopEl.classList.toggle('show', scrollTop > 600); }
+    if(heroPhone && phoneStage && !reduceMotion){
+      var rect = phoneStage.getBoundingClientRect();
+      var vh = window.innerHeight || doc.clientHeight;
+      var center = rect.top + rect.height / 2;
+      var progress = (vh / 2 - center) / vh;
+      if(progress > 1) progress = 1;
+      if(progress < -1) progress = -1;
+      heroPhone.style.transform = 'translateY(' + (progress * 70).toFixed(1) + 'px) rotate(' + (progress * 6).toFixed(2) + 'deg)';
+    }
+    ticking = false;
+  }
+  function onScroll(){
+    if(!ticking){ ticking = true; requestAnimationFrame(updateOnScroll); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  updateOnScroll();
+
+  if(toTopEl){
+    toTopEl.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
+    });
+  }
+
+  /* ---------- Mobile menu ---------- */
+  var menuBtn = document.getElementById('menuBtn');
+  var mobileNav = document.getElementById('mobileNav');
+  var mobileNavClose = document.getElementById('mobileNavClose');
+  function openMenu(){
+    if(!mobileNav) return;
+    mobileNav.classList.add('open');
+    menuBtn && menuBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    if(!mobileNav) return;
+    mobileNav.classList.remove('open');
+    menuBtn && menuBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  menuBtn && menuBtn.addEventListener('click', openMenu);
+  mobileNavClose && mobileNavClose.addEventListener('click', closeMenu);
+  mobileNav && mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+
+  /* ---------- Scrollspy ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  if(navLinks.length && 'IntersectionObserver' in window){
+    var spySections = navLinks.map(function(a){
+      return document.querySelector(a.getAttribute('href'));
+    }).filter(Boolean);
+    var spyIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        var id = '#' + entry.target.id;
+        navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === id); });
+      });
+    }, {rootMargin:'-45% 0px -45% 0px', threshold:0});
+    spySections.forEach(function(s){ spyIO.observe(s); });
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var revealIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in'); revealIO.unobserve(entry.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ revealIO.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- Stat counters ---------- */
+  var statEls = document.querySelectorAll('.stat b[data-count]');
+  if(statEls.length && 'IntersectionObserver' in window){
+    var countIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        countIO.unobserve(entry.target);
+        var el = entry.target;
+        var target = parseFloat(el.getAttribute('data-count')) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        if(reduceMotion){ el.textContent = target + suffix; return; }
+        var start = null;
+        var duration = 900;
+        function step(ts){
+          if(start === null) start = ts;
+          var p = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if(p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, {threshold:0.4});
+    statEls.forEach(function(el){ countIO.observe(el); });
+  }
+
+  /* ---------- Language greeting demo ---------- */
+  var langCells = Array.prototype.slice.call(document.querySelectorAll('.lang-cell[data-greet]'));
+  var greetText = document.getElementById('greetText');
+  langCells.forEach(function(cell){
+    cell.addEventListener('click', function(){
+      langCells.forEach(function(c){ c.classList.remove('active'); });
+      cell.classList.add('active');
+      if(greetText) greetText.textContent = cell.getAttribute('data-greet');
+    });
+    cell.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); cell.click(); }
+    });
+  });
+
+  /* ---------- Hero phone: home / question screens ---------- */
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  var hpScreen = document.getElementById('hpScreen');
+  var ICON_CHEVRON = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>';
+  var ICON_STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z"/></svg>';
+  var ICON_VISA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.3" r="1.6"/><path d="M6 15c.4-1.3 1.6-2 2.5-2s2.1.7 2.5 2M14 9h5M14 12.5h5M14 16h3.5"/></svg>';
+  var ICON_HOME = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9"/></svg>';
+  var ICON_WALLET = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.2" r="1" fill="currentColor" stroke="none"/></svg>';
+  var ICON_SEND = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 21 3l-8 18-2-8-8-2Z"/></svg>';
+
+  var SCREEN_HOME =
+    '<div class="hp-badge-circle">' + ICON_STAR + '</div>' +
+    '<h3 class="hp-headline">한국 입국을 위한<br>가장 똑똑한 챗봇</h3>' +
+    '<p class="hp-sub">궁금한 점을 물어보면<br>빠르게 해결해드려요.</p>' +
+    '<div class="hp-cardlist">' +
+      '<div class="hp-card"><span class="ic">' + ICON_VISA + '</span><span class="tx"><b>사증</b><span>입국 전 비자 안내</span></span>' + ICON_CHEVRON + '</div>' +
+      '<div class="hp-card"><span class="ic">' + ICON_HOME + '</span><span class="tx"><b>체류</b><span>입국 후 생활 안내</span></span>' + ICON_CHEVRON + '</div>' +
+      '<div class="hp-card"><span class="ic">' + ICON_WALLET + '</span><span class="tx"><b>금융</b><span>한국 금융 이용법</span></span>' + ICON_CHEVRON + '</div>' +
+    '</div>';
+
+  var SCREEN_QUESTIONS =
+    '<div class="hp-badge-circle">' + ICON_STAR + '</div>' +
+    '<h3 class="hp-headline">사증과 관련된<br>질문을 해보세요</h3>' +
+    '<p class="hp-sub">궁금한 점을 물어보면<br>빠르게 해결해드려요.</p>' +
+    '<div class="hp-chips">' +
+      '<div class="hp-chip">관광비자를 받을 때도 초청장이 필요한가요?</div>' +
+      '<div class="hp-chip">유학생으로 한국에 가려면 어떤 사증을 받아야 하나요?</div>' +
+      '<div class="hp-chip">가족 초청에는 어떤 사증이 필요한가요?</div>' +
+    '</div>' +
+    '<div class="hp-bottom">' +
+      '<div class="hp-back">← 이전으로 돌아가기</div>' +
+      '<div class="hp-inputbar"><span class="hp-input-text">직접 적어서 질문할 수 있어요</span><span class="hp-send">' + ICON_SEND + '</span></div>' +
+    '</div>';
+
+  var SCREENS = [SCREEN_HOME, SCREEN_QUESTIONS];
+  var screenIndex = 0;
+  var screenCancelled = false;
+
+  function showScreen(idx){
+    if(hpScreen) hpScreen.innerHTML = SCREENS[idx];
+  }
+  function cycleScreens(){
+    if(!hpScreen || screenCancelled) return;
+    hpScreen.classList.add('fade');
+    wait(280).then(function(){
+      screenIndex = (screenIndex + 1) % SCREENS.length;
+      showScreen(screenIndex);
+      hpScreen.classList.remove('fade');
+      return wait(4200);
+    }).then(function(){
+      if(!screenCancelled) cycleScreens();
+    });
+  }
+  if(hpScreen){
+    showScreen(0);
+    if(!reduceMotion){ wait(4200).then(cycleScreens); }
+  }
+
+  /* ---------- 360° drag rotation + idle spin ---------- */
+  var hpFlipper = document.getElementById('hpFlipper');
+  if(hpFlipper){
+    var flipRotation = 0;
+    var isDragging = false;
+    var dragConfirmed = false;
+    var dragStartX = 0, dragStartY = 0, dragStartRotation = 0;
+    var idleDegPerSec = 360 / 30;
+    var lastFrameTime = null;
+
+    function applyFlip(){
+      hpFlipper.style.transform = 'rotateY(' + flipRotation.toFixed(2) + 'deg)';
+    }
+    function idleTick(ts){
+      if(lastFrameTime === null) lastFrameTime = ts;
+      var dt = (ts - lastFrameTime) / 1000;
+      lastFrameTime = ts;
+      if(!isDragging){
+        flipRotation += idleDegPerSec * dt;
+        applyFlip();
+      }
+      requestAnimationFrame(idleTick);
+    }
+    applyFlip();
+    if(!reduceMotion){ requestAnimationFrame(idleTick); }
+
+    function pointFrom(e){ return e.touches ? e.touches[0] : e; }
+    function onDown(e){
+      isDragging = true;
+      dragConfirmed = (e.type === 'mousedown');
+      var p = pointFrom(e);
+      dragStartX = p.clientX; dragStartY = p.clientY; dragStartRotation = flipRotation;
+      lastFrameTime = null;
+      if(dragConfirmed) hpFlipper.classList.add('dragging');
+    }
+    function onMove(e){
+      if(!isDragging) return;
+      var p = pointFrom(e);
+      var dx = p.clientX - dragStartX, dy = p.clientY - dragStartY;
+      if(!dragConfirmed){
+        if(Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        if(Math.abs(dx) <= Math.abs(dy)){ isDragging = false; return; }
+        dragConfirmed = true;
+        hpFlipper.classList.add('dragging');
+      }
+      flipRotation = dragStartRotation + dx * 0.5;
+      applyFlip();
+      if(e.cancelable) e.preventDefault();
+    }
+    function onUp(){
+      isDragging = false;
+      dragConfirmed = false;
+      lastFrameTime = null;
+      hpFlipper.classList.remove('dragging');
+    }
+    hpFlipper.addEventListener('mousedown', onDown);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    hpFlipper.addEventListener('touchstart', onDown, {passive:true});
+    hpFlipper.addEventListener('touchmove', onMove, {passive:false});
+    hpFlipper.addEventListener('touchend', onUp);
+    hpFlipper.addEventListener('touchcancel', onUp);
+  }
+})();
+</script>
+
+</body>
+</html>
