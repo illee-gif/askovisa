@@ -93,7 +93,12 @@
     padding:20px 32px;max-width:1180px;margin:0 auto;
   }
   @media (max-width:640px){ .nav-inner{padding:16px 20px;} }
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-0.02em;}
+  .brand{
+    display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-0.02em;
+    color:inherit;text-decoration:none;cursor:pointer;transition:opacity .2s ease;
+  }
+  .brand:hover{opacity:.72;}
+  .brand:active{opacity:.55;}
   .brand .logo-mark{width:32px;height:32px;border-radius:9px;}
   .nav-links{display:flex;gap:28px;}
   .nav-links a{
@@ -493,10 +498,10 @@
 
 <header class="nav">
   <div class="nav-inner">
-    <div class="brand">
+    <a class="brand" href="#top" id="brandHome">
       <img class="logo-mark" src="assets/app-icon.png" alt="" width="32" height="32">
       ASKOVISA
-    </div>
+    </a>
     <nav class="nav-links">
       <a href="#about" data-i18n="nav.about">소개</a>
       <a href="#press" data-i18n="nav.press">언론</a>
@@ -1090,6 +1095,17 @@
 
   if(toTopEl){
     toTopEl.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
+    });
+  }
+
+  /* ---------- Header brand acts as "back to top" ---------- */
+  /* The href="#top" still works with JS off; this just smooths it and keeps
+     the URL clean. */
+  var brandEl = document.getElementById('brandHome');
+  if(brandEl){
+    brandEl.addEventListener('click', function(e){
+      e.preventDefault();
       window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
     });
   }
