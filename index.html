@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASKOVISA | 이주민·난민을 위한 AI 비자 안내 챗봇</title>
 <meta name="description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 9개 언어로 제공합니다.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/app-icon.png">
+<meta property="og:title" content="ASKOVISA | 이주민·난민을 위한 AI 비자 안내 챗봇">
+<meta property="og:description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 9개 언어로 제공합니다.">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -62,7 +68,7 @@
   }
   @media (max-width:640px){ .nav-inner{padding:16px 20px;} }
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-0.02em;}
-  .brand .logo-mark{width:32px;height:32px;}
+  .brand .logo-mark{width:32px;height:32px;border-radius:9px;}
   .nav-links{display:flex;gap:28px;}
   .nav-links a{
     font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);
@@ -74,8 +80,10 @@
   .nav-cta{
     font-family:var(--mono);font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
     background:var(--gold);color:#161616;padding:11px 20px;border-radius:2px;white-space:nowrap;
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1),background .15s ease;
   }
-  .nav-cta:hover{background:#ffe08a;}
+  .nav-cta:hover{background:#ffe08a;transform:translateY(-2px) scale(1.03);}
+  .nav-cta:active{transform:scale(.95);}
   .lang-switch{
     display:flex;border:1px solid var(--charcoal-line);border-radius:999px;overflow:hidden;
     font-family:var(--mono);flex:none;
@@ -83,9 +91,11 @@
   .lang-switch button{
     background:transparent;border:none;color:var(--muted);cursor:pointer;
     padding:8px 13px;font-size:11px;font-weight:700;letter-spacing:0.05em;font-family:var(--mono);
+    transition:transform .12s ease,background .15s ease,color .15s ease;
   }
   .lang-switch button.active{background:var(--gold);color:#161616;}
   .lang-switch button:not(.active):hover{color:var(--ink);}
+  .lang-switch button:active{transform:scale(.88);}
   @media (max-width:800px){ .nav-inner .lang-switch{display:none;} }
   .mobile-nav .lang-switch{margin-top:6px;font-size:13px;}
   .mobile-nav .lang-switch button{padding:10px 18px;font-size:13px;}
@@ -111,13 +121,17 @@
   .btn-solid{
     display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#161616;
     padding:15px 26px;border-radius:2px;font-weight:700;font-size:14.5px;font-family:var(--sans);
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1),background .15s ease;
   }
-  .btn-solid:hover{background:#ffe08a;}
+  .btn-solid:hover{background:#ffe08a;transform:translateY(-2px) scale(1.02);}
+  .btn-solid:active{transform:scale(.96);}
   .btn-line{
     display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--ink);
     padding:15px 26px;border:1px solid var(--charcoal-line);border-radius:2px;font-weight:600;font-size:14.5px;
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1),border-color .15s ease,color .15s ease;
   }
-  .btn-line:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-line:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px) scale(1.02);}
+  .btn-line:active{transform:scale(.96);}
   .btn-solid svg,.btn-line svg{width:18px;height:18px;}
 
   /* mosaic */
@@ -221,14 +235,29 @@
   }
   .lang-cell:hover{background:var(--gold-dim);color:var(--gold);}
 
+  /* ---------- Screenshot gallery ---------- */
+  .shots-scroll{
+    display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:4px 4px 16px;margin:0 -4px;-webkit-overflow-scrolling:touch;
+  }
+  .shots-scroll::-webkit-scrollbar{height:6px;}
+  .shots-scroll::-webkit-scrollbar-track{background:var(--panel);border-radius:99px;}
+  .shots-scroll::-webkit-scrollbar-thumb{background:var(--charcoal-line);border-radius:99px;}
+  .shot-card{
+    flex:none;scroll-snap-align:start;width:230px;border-radius:22px;overflow:hidden;
+    border:1px solid var(--line);background:var(--panel);box-shadow:0 20px 40px -24px rgba(0,0,0,0.6);
+  }
+  .shot-card img{width:100%;display:block;}
+  @media (max-width:640px){ .shot-card{width:190px;border-radius:18px;} }
+
   /* ---------- Logo meaning (single mark story) ---------- */
   .logo-story{display:flex;align-items:center;gap:56px;flex-wrap:wrap;}
-  .logo-story-mark{
-    width:140px;height:140px;border-radius:50%;background:var(--gold);flex:none;
-    display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -20px rgba(255,214,104,0.35);
+  .logo-story-mark{flex:none;}
+  .logo-story-mark img{
+    width:140px;height:140px;border-radius:34px;display:block;
+    filter:drop-shadow(0 30px 60px rgba(255,214,104,0.35));
   }
-  .logo-story-mark svg{width:60px;height:60px;color:#161616;}
-  @media (max-width:560px){ .logo-story-mark{width:104px;height:104px;} .logo-story-mark svg{width:44px;height:44px;} }
+  @media (max-width:560px){ .logo-story-mark img{width:104px;height:104px;border-radius:26px;} }
   .logo-story-text{font-size:clamp(20px,2.6vw,28px);font-weight:600;line-height:1.55;letter-spacing:-0.01em;max-width:640px;margin:0;}
   .logo-story-text .hl{color:var(--gold);}
   .logo-story-cap{font-family:var(--mono);font-size:12.5px;color:var(--muted-2);margin-top:18px;letter-spacing:0.02em;}
@@ -253,7 +282,7 @@
   .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;}
   @media (max-width:760px){ .footer-grid{grid-template-columns:1fr;gap:36px;} }
   .footer-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;margin-bottom:16px;}
-  .footer-brand .logo-mark{width:28px;height:28px;}
+  .footer-brand .logo-mark{width:28px;height:28px;border-radius:8px;}
   footer p.desc{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted);margin:0;max-width:340px;}
   footer h5{
     font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-2);
@@ -291,7 +320,10 @@
   .mobile-nav nav a:hover{color:var(--gold);}
   .mobile-nav .mnav-cta{
     margin-top:10px;background:var(--gold);color:#161616;padding:14px 28px;border-radius:2px;font-size:16px;
+    transition:transform .15s cubic-bezier(.34,1.56,.64,1);
   }
+  .mobile-nav .mnav-cta:hover{transform:scale(1.04);}
+  .mobile-nav .mnav-cta:active{transform:scale(.95);}
   .mobile-nav-close{
     position:absolute;top:24px;right:28px;background:none;border:none;color:var(--muted);
     font-family:var(--mono);font-size:12.5px;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;
@@ -301,128 +333,70 @@
   /* ---------- Nav scrollspy ---------- */
   .nav-links a.active{color:var(--gold);}
 
-  /* ---------- Hero phone (scroll parallax, app UI) ---------- */
+  /* ---------- Hero phone (real device photo, scroll parallax) ---------- */
   .hero-phone-stage{
     display:flex;justify-content:center;align-items:center;
-    padding:72px 24px 80px;position:relative;z-index:2;overflow:hidden;border-radius:36px;
-    background:
-      radial-gradient(120% 90% at 50% -12%, rgba(255,250,240,0.24), transparent 55%),
-      radial-gradient(100% 80% at 85% 12%, rgba(214,178,199,0.12), transparent 55%),
-      linear-gradient(180deg, rgba(18,14,16,0.14) 0%, rgba(18,14,16,0.4) 55%, rgba(10,8,9,0.74) 100%),
-      radial-gradient(140% 110% at 50% 122%, rgba(14,12,13,0.88), transparent 60%),
-      url("assets/desk-photo.jpg");
-    background-size:auto,auto,auto,auto,cover;
-    background-position:0 0,0 0,0 0,0 0,center 42%;
-    background-repeat:no-repeat;
+    padding:84px 24px 72px;position:relative;z-index:2;overflow:hidden;border-radius:36px;
   }
-  @media (max-width:560px){ .hero-phone-stage{padding:52px 16px 60px;border-radius:26px;} }
+  @media (max-width:560px){ .hero-phone-stage{padding:60px 16px 52px;border-radius:26px;} }
+  .hero-bg-photo{
+    position:absolute;inset:0;z-index:0;will-change:transform;transform:scale(1);
+    background-image:url("assets/hero-bg-seoul.jpg");
+    background-size:cover;background-position:center 38%;background-repeat:no-repeat;
+  }
+  .hero-phone-stage::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 50% -12%, rgba(255,250,240,0.22), transparent 55%),
+      linear-gradient(180deg, rgba(10,9,10,0.12) 0%, rgba(10,9,10,0.38) 55%, rgba(6,5,6,0.72) 100%),
+      radial-gradient(140% 110% at 50% 122%, rgba(8,7,8,0.85), transparent 60%);
+  }
   .hero-phone-stage::before{
-    content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
+    content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
-  .hero-phone{--phone-w:250px;--phone-d:18px;width:var(--phone-w);perspective:1300px;will-change:transform;}
-  @media (max-width:560px){ .hero-phone{--phone-w:220px;} }
-  .hp-flipper{position:relative;width:100%;transform-style:preserve-3d;cursor:grab;will-change:transform;}
-  .hp-flipper.dragging{cursor:grabbing;}
-  .hp-flipper.dragging, .hp-flipper.dragging *{user-select:none;}
-  .hp-face{backface-visibility:hidden;-webkit-backface-visibility:hidden;}
-  .hp-face-front{
-    background:linear-gradient(175deg,#f8f3f5 0%,#e9cddc 22%,#d2a8c1 50%,#ad7f9f 78%,#93677f 100%);
-    border-radius:34px;padding:10px;overflow:hidden;
-    box-shadow:0 40px 90px -30px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.7),inset 0 0 0 1px rgba(255,255,255,0.35);
-    transform:translateZ(calc(var(--phone-d) / 2));
+  .hero-phone{
+    width:260px;filter:drop-shadow(0 40px 70px rgba(0,0,0,0.55));will-change:transform;
+    position:relative;z-index:3;
   }
-  .hp-face-back{
-    position:absolute;inset:0;transform:rotateY(180deg) translateZ(calc(var(--phone-d) / 2));
-    background:linear-gradient(175deg,#faf5f7 0%,#eed3e2 20%,#d6acc6 45%,#b489a5 70%,#8f6685 100%);
-    border-radius:34px;overflow:hidden;
-    box-shadow:0 40px 90px -30px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.65),inset 0 0 0 1px rgba(255,255,255,0.3);
-    display:flex;align-items:center;justify-content:center;
+  @media (max-width:560px){ .hero-phone{width:210px;} }
+
+  /* ---------- Hero phone 3D (Three.js) ---------- */
+  .hero-phone-3d{
+    width:280px;height:480px;position:relative;z-index:3;touch-action:none;
   }
-  .hp-edge{
-    position:absolute;top:32px;bottom:32px;height:auto;width:var(--phone-d);
-    border-radius:calc(var(--phone-d) / 2);
-    backface-visibility:hidden;-webkit-backface-visibility:hidden;
-    background:linear-gradient(180deg,#fcf7f9 0%,#e9cddc 12%,#8a6580 50%,#e9cddc 88%,#fcf7f9 100%);
+  .hero-phone-3d.hp-hidden{display:none;}
+  .hero-phone-3d canvas{
+    display:block;width:100% !important;height:100% !important;
+    filter:drop-shadow(0 40px 70px rgba(0,0,0,0.55));cursor:grab;
+    opacity:0;transition:opacity .5s ease;
   }
-  .hp-edge-right{left:calc(100% - (var(--phone-d) / 2));transform:rotateY(90deg);}
-  .hp-edge-left{left:calc(0px - (var(--phone-d) / 2));transform:rotateY(-90deg);}
-  .hp-back-cam{
-    position:absolute;top:24px;left:22px;width:60px;height:60px;border-radius:18px;
-    background:linear-gradient(145deg,rgba(255,255,255,0.45),rgba(0,0,0,0.15));
-  }
-  .hp-back-cam .lens{
-    position:absolute;width:25px;height:25px;border-radius:50%;
-    background:radial-gradient(circle at 35% 35%,#4a4a4c,#0c0c0d 70%);
-    box-shadow:0 0 0 3px rgba(255,255,255,0.3) inset;
-  }
-  .hp-back-cam .lens-1{top:6px;left:6px;}
-  .hp-back-cam .lens-2{bottom:6px;right:6px;}
-  .hp-back-logo{width:50px;height:50px;color:rgba(255,255,255,0.6);}
-  .hp-back-text{
-    position:absolute;bottom:26px;left:0;right:0;text-align:center;
-    font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:0.1em;color:rgba(80,55,70,0.4);
-  }
-  .hp-hint{
-    display:flex;align-items:center;justify-content:center;gap:8px;margin-top:22px;
-    font-family:var(--mono);font-size:11px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.08em;
-  }
-  .hp-hint svg{width:13px;height:13px;}
-  .hp-screen{background:#101010;border-radius:24px;overflow:hidden;aspect-ratio:9/18.3;display:flex;flex-direction:column;}
-  .hp-status{
-    display:flex;justify-content:space-between;align-items:center;padding:10px 16px 2px;
-    font-family:var(--sans);font-size:10.5px;font-weight:700;color:var(--ink);
-  }
-  .hp-status svg{color:var(--ink);}
-  .hp-header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px 12px;border-bottom:1px solid var(--line);}
-  .hp-header .hp-logo{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-weight:700;font-size:12.5px;color:var(--ink);}
-  .hp-header .hp-logo svg{width:18px;height:18px;flex:none;}
-  .hp-lang{display:flex;align-items:center;gap:4px;background:var(--panel-2);border-radius:999px;padding:5px 9px;font-family:var(--sans);font-size:9.5px;color:var(--muted);}
-  .hp-screen-content{
-    flex:1;padding:12px 16px 8px;display:flex;flex-direction:column;align-items:center;text-align:center;
-    position:relative;overflow:hidden;transition:opacity .25s ease;
-  }
-  .hp-screen-content.fade{opacity:0;}
-  .hp-badge-circle{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;margin:0 0 8px;flex:none;}
-  .hp-badge-circle svg{width:16px;height:16px;color:#161616;}
-  .hp-headline{font-family:var(--sans);font-weight:700;font-size:14px;line-height:1.3;color:var(--ink);margin:0 0 5px;}
-  .hp-sub{font-family:var(--sans);font-size:9.5px;color:var(--muted);margin:0 0 10px;line-height:1.45;}
-  .hp-cardlist{display:flex;flex-direction:column;gap:7px;width:100%;}
-  .hp-card{
-    display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);
-    border-radius:12px;padding:8px 11px;text-align:left;
-  }
-  .hp-card .ic{width:23px;height:23px;border-radius:8px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;flex:none;}
-  .hp-card .ic svg{width:12px;height:12px;color:var(--gold);}
-  .hp-card .tx{display:flex;flex-direction:column;min-width:0;}
-  .hp-card .tx b{font-family:var(--sans);font-size:10.5px;font-weight:700;color:var(--ink);}
-  .hp-card .tx span{font-family:var(--sans);font-size:8.5px;color:var(--muted-2);}
-  .hp-card .chev{margin-left:auto;color:var(--muted-2);width:14px;height:14px;flex:none;}
-  .hp-chips{display:flex;flex-direction:column;gap:6px;width:100%;}
-  .hp-chip{
-    background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:7px 10px;
-    font-family:var(--sans);font-size:9px;color:var(--ink);text-align:left;line-height:1.35;
-  }
-  .hp-bottom{margin-top:auto;width:100%;}
-  .hp-back{font-family:var(--sans);font-size:9px;color:var(--muted-2);margin:6px 0 4px;text-align:left;}
-  .hp-inputbar{
-    display:flex;align-items:center;gap:8px;background:var(--panel-2);
-    border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 12px;
-  }
-  .hp-input-text{flex:1;font-family:var(--sans);font-size:9px;color:var(--muted-2);text-align:left;min-width:0;}
-  .hp-send{
-    width:26px;height:26px;min-width:26px;flex:none;border-radius:50%;background:var(--gold);
-    display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.25);
-  }
-  .hp-send svg{width:12px;height:12px;color:#161616;}
-  .hp-tabbar{display:flex;justify-content:space-around;padding:9px 6px;border-top:1px solid var(--line);}
-  .hp-tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--sans);font-size:7.5px;color:var(--muted-2);}
-  .hp-tab.active{color:var(--gold);}
-  .hp-tab svg{width:15px;height:15px;}
+  .hero-phone-3d canvas.hp3d-ready{opacity:1;}
+  .hero-phone-3d canvas:active{cursor:grabbing;}
+  @media (max-width:560px){ .hero-phone-3d{width:220px;height:380px;} }
+  .hero-phone-fallback.hp-hidden{display:none;}
 
   /* ---------- Scroll reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
   .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- Feature card stagger ---------- */
+  .fc-reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+  .fc-reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- Hero phone spring ---------- */
+  .hero-phone{transition:transform .32s cubic-bezier(.22,1.4,.36,1),opacity .35s ease;}
+  .hero-phone.crossfade{opacity:0;}
+  @keyframes heroPhoneSpring{
+    0%{transform:scale(.8) translateY(70px) rotate(-6deg);opacity:0;}
+    55%{transform:scale(1.04) translateY(-8px) rotate(2deg);opacity:1;}
+    78%{transform:scale(.98) translateY(3px) rotate(-1deg);}
+    100%{transform:scale(1) translateY(0) rotate(0deg);opacity:1;}
+  }
+  .hero-phone.spring-in{animation:heroPhoneSpring .9s cubic-bezier(.22,1,.36,1) both;}
+
+  /* ---------- Screenshot carousel parallax ---------- */
+  .shot-card img{will-change:transform;transition:transform .08s linear;}
 
   /* ---------- Language demo ---------- */
   .lang-cell{cursor:pointer;}
@@ -440,12 +414,14 @@
     box-shadow:0 10px 24px -8px rgba(0,0,0,0.5);
   }
   .to-top.show{opacity:1;pointer-events:auto;}
-  .to-top:hover{transform:translateY(-3px);}
+  .to-top:hover{transform:translateY(-3px) scale(1.06);}
+  .to-top:active{transform:scale(.9);}
 
   @media (prefers-reduced-motion: reduce){
-    .reveal{opacity:1;transform:none;transition:none;}
-    .hero-phone{transform:none !important;}
-    .hp-screen-content{transition:none !important;}
+    .reveal, .fc-reveal{opacity:1;transform:none;transition:none;}
+    .hero-phone{transform:none !important;transition:none !important;animation:none !important;}
+    .hero-bg-photo{transform:none !important;}
+    .shot-card img{transition:none !important;}
     html{scroll-behavior:auto;}
   }
 </style>
@@ -457,10 +433,7 @@
 <header class="nav">
   <div class="nav-inner">
     <div class="brand">
-      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="1" y="1" width="30" height="30" rx="9" fill="#4c4c4e"/>
-        <path d="M16 6c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z" fill="#ffd668"/>
-      </svg>
+      <img class="logo-mark" src="assets/app-icon.png" alt="" width="32" height="32">
       ASKOVISA
     </div>
     <nav class="nav-links">
@@ -517,68 +490,13 @@
       </div>
     </div>
 
-    <div class="hero-phone-stage">
-      <div class="hero-phone" id="heroPhone">
-      <div class="hp-flipper" id="hpFlipper">
-      <div class="hp-face hp-face-front">
-        <div class="hp-screen">
-          <div class="hp-status">
-            <span>9:41</span>
-            <svg width="34" height="11" viewBox="0 0 34 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="0" y="6" width="2" height="5" rx="0.5" fill="currentColor"/>
-              <rect x="3.5" y="4" width="2" height="7" rx="0.5" fill="currentColor"/>
-              <rect x="7" y="2" width="2" height="9" rx="0.5" fill="currentColor"/>
-              <rect x="10.5" y="0" width="2" height="11" rx="0.5" fill="currentColor"/>
-              <path d="M17 8.2a3.6 3.6 0 0 1 4.4 0M15.8 5.8a6 6 0 0 1 6.8 0" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-              <circle cx="19.2" cy="10" r="0.9" fill="currentColor"/>
-              <rect x="25" y="1" width="8" height="9" rx="2" stroke="currentColor" stroke-width="1"/>
-              <rect x="26.2" y="2.2" width="5.6" height="6.6" rx="1" fill="currentColor"/>
-            </svg>
-          </div>
-          <div class="hp-header">
-            <div class="hp-logo">
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="1" y="1" width="30" height="30" rx="9" fill="#2f2f30"/>
-                <path d="M16 7c0 4.2 1.3 7.4 4.6 9-3.3 1.6-4.6 4.8-4.6 9-0-4.2-1.3-7.4-4.6-9 3.3-1.6 4.6-4.8 4.6-9Z" fill="#ffd668"/>
-              </svg>
-              ASKOVISA
-            </div>
-            <div class="hp-lang" data-i18n="hp.langChip">한국어 ⌄</div>
-          </div>
-          <div class="hp-screen-content" id="hpScreen"></div>
-          <div class="hp-tabbar">
-            <div class="hp-tab active">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H8l-5 5v-5a3 3 0 0 1 0-11Z"/></svg>
-              <span data-i18n="hp.tab.chat">AI채팅</span>
-            </div>
-            <div class="hp-tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-              <span data-i18n="hp.tab.services">서비스</span>
-            </div>
-            <div class="hp-tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-              <span data-i18n="hp.tab.alerts">알림</span>
-            </div>
-            <div class="hp-tab">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-              <span data-i18n="hp.tab.profile">내정보</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="hp-face hp-face-back">
-        <div class="hp-back-cam"><span class="lens lens-1"></span><span class="lens lens-2"></span></div>
-        <svg class="hp-back-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z"/></svg>
-        <div class="hp-back-text">ASKOVISA</div>
-      </div>
-      <div class="hp-edge hp-edge-right"></div>
-      <div class="hp-edge hp-edge-left"></div>
-      </div>
-      </div>
-    </div>
-    <div class="hp-hint">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 5v7h7"/></svg>
-      <span data-i18n="hp.hint">드래그해서 360° 둘러보기</span>
+    <div class="hero-phone-stage" id="phoneStage">
+      <div class="hero-bg-photo" id="heroBgPhoto" aria-hidden="true"></div>
+      <div class="hero-phone-3d hp-hidden" id="heroPhone3D" aria-hidden="true"></div>
+      <img class="hero-phone hero-phone-fallback" id="heroPhoneFallback" src="assets/hero-phone-home-kr.png"
+        data-src-home-ko="assets/hero-phone-home-kr.png" data-src-home-en="assets/hero-phone-home-en.png"
+        data-src-question-ko="assets/hero-phone-question-kr.png" data-src-question-en="assets/hero-phone-question-en.png"
+        alt="ASKOVISA app screen shown on a phone">
     </div>
 
     <div class="mosaic">
@@ -638,7 +556,7 @@
       <a class="link-underline" href="#languages" data-i18n="features.viewLangs">지원 언어 보기</a>
     </div>
 
-    <div class="feature-card reveal">
+    <div class="feature-card fc-reveal">
       <div class="feature-visual">
         <span class="num-bg">01</span>
         <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -653,7 +571,7 @@
       </div>
     </div>
 
-    <div class="feature-card reveal">
+    <div class="feature-card fc-reveal">
       <div class="feature-visual">
         <span class="num-bg">02</span>
         <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M4 4h16v12H8l-4 4V4Z"/><path d="M8 9h8M8 13h5"/></svg>
@@ -668,7 +586,7 @@
       </div>
     </div>
 
-    <div class="feature-card reveal">
+    <div class="feature-card fc-reveal">
       <div class="feature-visual">
         <span class="num-bg">03</span>
         <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
@@ -683,7 +601,7 @@
       </div>
     </div>
 
-    <div class="feature-card reveal">
+    <div class="feature-card fc-reveal">
       <div class="feature-visual">
         <span class="num-bg">04</span>
         <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/><circle cx="12" cy="12" r="9"/></svg>
@@ -697,7 +615,7 @@
       </div>
     </div>
 
-    <div class="feature-card reveal">
+    <div class="feature-card fc-reveal">
       <div class="feature-visual">
         <span class="num-bg">05</span>
         <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M12 22c4.4-1.6 8-5.2 8-11.2V4.2L12 1 4 4.2v6.6C4 16.8 7.6 20.4 12 22Z"/></svg>
@@ -709,6 +627,25 @@
         <h3 data-i18n="feature5.title">현실적인 안내</h3>
         <p data-i18n="feature5.desc">전문 상담을 대체하지는 않지만, 기본적인 정보를 제공해 올바른 방향으로 나아갈 수 있도록 안내합니다.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">See It In Action</span>
+        <h2 data-i18n="shots.h2">실제 화면으로 확인하세요</h2>
+      </div>
+    </div>
+    <div class="shots-scroll reveal">
+      <div class="shot-card"><img data-src-ko="assets/screenshots/shot1_kr.jpg" data-src-en="assets/screenshots/shot1_en.jpg" src="assets/screenshots/shot1_kr.jpg" alt="ASKOVISA home screen — visa, residence, finance guide cards" loading="lazy"></div>
+      <div class="shot-card"><img data-src-ko="assets/screenshots/shot2_kr.jpg" data-src-en="assets/screenshots/shot2_en.jpg" src="assets/screenshots/shot2_kr.jpg" alt="ASKOVISA AI chat screen with suggested visa questions" loading="lazy"></div>
+      <div class="shot-card"><img data-src-ko="assets/screenshots/shot3_kr.jpg" data-src-en="assets/screenshots/shot3_en.jpg" src="assets/screenshots/shot3_kr.jpg" alt="ASKOVISA AI chat answering a real visa question with sources" loading="lazy"></div>
+      <div class="shot-card"><img data-src-ko="assets/screenshots/shot4_kr.jpg" data-src-en="assets/screenshots/shot4_en.jpg" src="assets/screenshots/shot4_kr.jpg" alt="ASKOVISA privacy — no sign-up required, chats are not stored" loading="lazy"></div>
+      <div class="shot-card"><img data-src-ko="assets/screenshots/shot5_kr.jpg" data-src-en="assets/screenshots/shot5_en.jpg" src="assets/screenshots/shot5_kr.jpg" alt="ASKOVISA language picker with 9 supported languages" loading="lazy"></div>
+      <div class="shot-card"><img data-src-ko="assets/screenshots/shot6_kr.jpg" data-src-en="assets/screenshots/shot6_en.jpg" src="assets/screenshots/shot6_kr.jpg" alt="ASKOVISA community board with built-in translation" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -788,7 +725,7 @@
 
     <div class="logo-story reveal">
       <div class="logo-story-mark">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z"/></svg>
+        <img src="assets/app-icon.png" alt="ASKOVISA logo mark">
       </div>
       <div>
         <p class="logo-story-text" data-i18n="logo.text">
@@ -856,10 +793,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="30" height="30" rx="9" fill="#4c4c4e"/>
-            <path d="M16 6c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z" fill="#ffd668"/>
-          </svg>
+          <img class="logo-mark" src="assets/app-icon.png" alt="" width="28" height="28">
           ASKOVISA
         </div>
         <p class="desc" data-i18n="footer.desc">이주민과 난민을 위한 무료 AI 비자·체류 안내 챗봇.<br>공익법센터 어필이 개발했습니다.</p>
@@ -867,6 +801,9 @@
           ※ ASKOVISA는 전문 법률 상담을 대체하지 않습니다. 개별 사안은 반드시 전문가 또는
           관계 기관(하이코리아, 출입국·외국인청 등)의 확인을 받으시기 바랍니다.
         </div>
+        <p style="font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--muted-2);margin:14px 0 0;">
+          3D model: This work is based on <a href="https://sketchfab.com/3d-models/smartphone-380280333c9f4fb8a21a53d18f6789e6" target="_blank" rel="noopener" style="color:inherit;">"Smartphone"</a> by <a href="https://sketchfab.com/nebulariser" target="_blank" rel="noopener" style="color:inherit;">Manuel W.</a>, licensed under <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener" style="color:inherit;">CC BY-NC 4.0</a>.
+        </p>
       </div>
       <div>
         <h5>Contact</h5>
@@ -912,21 +849,6 @@
       'hero.badge':'★ 공익법센터 어필 · 2025.12.11 출시',
       'hero.h1':'이주민과 난민은<br>답을 <span class="out">듣기 전에</span><br>먼저 이해받아야 한다<span style="color:var(--gold);">®</span>',
       'hero.desc':'ASKOVISA(ASK + KO + VISA)는 한국 입국 사증, 체류자격, 통장개설·4대보험 등 금융서비스에 관한 정확한 정보를 누구나 무료로, 9개 언어로 물어볼 수 있게 만든 AI 챗봇입니다.',
-      'hp.langChip':'한국어 ⌄',
-      'hp.hint':'드래그해서 360° 둘러보기',
-      'hp.tab.chat':'AI채팅', 'hp.tab.services':'서비스', 'hp.tab.alerts':'알림', 'hp.tab.profile':'내정보',
-      'hp.home.headline':'한국 입국을 위한<br>가장 똑똑한 챗봇',
-      'hp.home.sub':'궁금한 점을 물어보면<br>빠르게 해결해드려요.',
-      'hp.home.visa.title':'사증', 'hp.home.visa.desc':'입국 전 비자 안내',
-      'hp.home.stay.title':'체류', 'hp.home.stay.desc':'입국 후 생활 안내',
-      'hp.home.finance.title':'금융', 'hp.home.finance.desc':'한국 금융 이용법',
-      'hp.q.headline':'사증과 관련된<br>질문을 해보세요',
-      'hp.q.sub':'궁금한 점을 물어보면<br>빠르게 해결해드려요.',
-      'hp.q.chip1':'관광비자를 받을 때도 초청장이 필요한가요?',
-      'hp.q.chip2':'유학생으로 한국에 가려면 어떤 사증을 받아야 하나요?',
-      'hp.q.chip3':'가족 초청에는 어떤 사증이 필요한가요?',
-      'hp.q.back':'← 이전으로 돌아가기',
-      'hp.q.inputPlaceholder':'직접 적어서 질문할 수 있어요',
       'mosaic.bigtext':'누구나,<br>무료로,<br>24시간 언제든',
       'mosaic.evidence':'근거 제시 · 매뉴얼 캡처',
       'mosaic.aiGuide':'AI 기반 정확한 안내',
@@ -941,6 +863,7 @@
       'feature3.title':'완전 무료', 'feature3.desc':'비영리 단체인 공익법센터 어필이 개발하여, 이용료나 멤버십 없이 누구나 무료로 사용할 수 있습니다.',
       'feature4.title':'다국어 지원', 'feature4.desc':'영어, 중국어, 베트남어, 태국어, 우즈베키스탄어, 러시아어, 아랍어, 프랑스어, 한국어까지 9개 언어를 지원합니다.',
       'feature5.title':'현실적인 안내', 'feature5.desc':'전문 상담을 대체하지는 않지만, 기본적인 정보를 제공해 올바른 방향으로 나아갈 수 있도록 안내합니다.',
+      'shots.h2':'실제 화면으로 확인하세요',
       'numlist.h2':'주요 정보 제공 분야',
       'numlist.row1':'입국 사증(비자)', 'numlist.row2':'체류자격', 'numlist.row3':'외국인등록',
       'numlist.row4':'통장 개설', 'numlist.row5':'4대 보험', 'numlist.row6':'체류 연장·변경',
@@ -970,21 +893,6 @@
       'hero.badge':'★ APIL (Advocates for Public Interest Law) · Launched Dec 11, 2025',
       'hero.h1':'Migrants and refugees<br>deserve to be <span class="out">understood</span><br>before they get an answer<span style="color:var(--gold);">®</span>',
       'hero.desc':'ASKOVISA (ASK + KO + VISA) is a free AI chatbot that gives anyone accurate answers on Korean entry visas, residence status, and financial services like bank accounts and social insurance — in 9 languages.',
-      'hp.langChip':'English ⌄',
-      'hp.hint':'Drag to rotate 360°',
-      'hp.tab.chat':'AI Chat', 'hp.tab.services':'Services', 'hp.tab.alerts':'Alerts', 'hp.tab.profile':'Profile',
-      'hp.home.headline':'The smartest chatbot<br>for entering Korea',
-      'hp.home.sub':'Ask what\'s on your mind —<br>we\'ll help you fast.',
-      'hp.home.visa.title':'Visa', 'hp.home.visa.desc':'Pre-arrival visa guide',
-      'hp.home.stay.title':'Residence', 'hp.home.stay.desc':'Life after arrival',
-      'hp.home.finance.title':'Finance', 'hp.home.finance.desc':'Using Korean banking',
-      'hp.q.headline':'Ask a question<br>about visas',
-      'hp.q.sub':'Ask what\'s on your mind —<br>we\'ll help you fast.',
-      'hp.q.chip1':'Do I need an invitation letter for a tourist visa too?',
-      'hp.q.chip2':'What visa do I need to study in Korea?',
-      'hp.q.chip3':'What visa do I need to invite family members?',
-      'hp.q.back':'← Back',
-      'hp.q.inputPlaceholder':'Type your own question',
       'mosaic.bigtext':'Anyone.<br>For free.<br>24/7, anytime.',
       'mosaic.evidence':'Evidence · manual screenshots',
       'mosaic.aiGuide':'AI-powered accurate guidance',
@@ -999,6 +907,7 @@
       'feature3.title':'Completely Free', 'feature3.desc':'Built by the non-profit APIL — no fees, no membership, free for everyone.',
       'feature4.title':'Multilingual', 'feature4.desc':'Supports 9 languages: English, Chinese, Vietnamese, Thai, Uzbek, Russian, Arabic, French, and Korean.',
       'feature5.title':'Practical Guidance', 'feature5.desc':'Not a replacement for professional advice — but enough to point you in the right direction.',
+      'shots.h2':'See It In Action',
       'numlist.h2':'What We Cover',
       'numlist.row1':'Entry Visa', 'numlist.row2':'Residence Status', 'numlist.row3':'ARC Registration',
       'numlist.row4':'Bank Account', 'numlist.row5':'Social Insurance', 'numlist.row6':'Extension / Change',
@@ -1028,11 +937,9 @@
     return (key in dict) ? dict[key] : (I18N.ko[key] || '');
   }
 
-  /* ---------- Scroll progress + back-to-top + phone parallax (single rAF loop) ---------- */
+  /* ---------- Scroll progress + back-to-top (single rAF loop) ---------- */
   var progressEl = document.getElementById('scrollProgress');
   var toTopEl = document.getElementById('toTop');
-  var heroPhone = document.getElementById('heroPhone');
-  var phoneStage = heroPhone ? heroPhone.closest('.hero-phone-stage') : null;
   var ticking = false;
 
   function updateOnScroll(){
@@ -1041,15 +948,6 @@
     var scrollHeight = doc.scrollHeight - doc.clientHeight;
     if(progressEl){ progressEl.style.width = (scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0) + '%'; }
     if(toTopEl){ toTopEl.classList.toggle('show', scrollTop > 600); }
-    if(heroPhone && phoneStage && !reduceMotion){
-      var rect = phoneStage.getBoundingClientRect();
-      var vh = window.innerHeight || doc.clientHeight;
-      var center = rect.top + rect.height / 2;
-      var progress = (vh / 2 - center) / vh;
-      if(progress > 1) progress = 1;
-      if(progress < -1) progress = -1;
-      heroPhone.style.transform = 'translateY(' + (progress * 70).toFixed(1) + 'px) rotate(' + (progress * 6).toFixed(2) + 'deg)';
-    }
     ticking = false;
   }
   function onScroll(){
@@ -1102,12 +1000,16 @@
     document.querySelectorAll('.lang-switch button').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });
+    document.querySelectorAll('.shot-card img[data-src-ko]').forEach(function(img){
+      var src = img.getAttribute('data-src-' + lang);
+      if(src) img.src = src;
+    });
     document.querySelectorAll('.stat b[data-count][data-done]').forEach(function(b){
       var suf = b.getAttribute('data-suffix-' + lang);
       if(suf === null) suf = b.getAttribute('data-suffix') || '';
       b.textContent = b.getAttribute('data-count') + suf;
     });
-    if(typeof showScreen === 'function' && typeof screenIndex === 'number') showScreen(screenIndex);
+    document.dispatchEvent(new CustomEvent('askovisa:langchange', {detail:{lang:lang}}));
   }
   document.querySelectorAll('.lang-switch button').forEach(function(b){
     b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
@@ -1140,6 +1042,23 @@
     revealEls.forEach(function(el){ revealIO.observe(el); });
   } else {
     revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- Feature card stagger ---------- */
+  var fcEls = Array.prototype.slice.call(document.querySelectorAll('.fc-reveal'));
+  if(fcEls.length && 'IntersectionObserver' in window){
+    var fcIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        fcIO.disconnect();
+        fcEls.forEach(function(card, i){
+          setTimeout(function(){ card.classList.add('in'); }, reduceMotion ? 0 : i * 130);
+        });
+      });
+    }, {threshold:0.15});
+    fcIO.observe(fcEls[0]);
+  } else {
+    fcEls.forEach(function(el){ el.classList.add('in'); });
   }
 
   /* ---------- Stat counters ---------- */
@@ -1186,131 +1105,493 @@
     });
   });
 
-  /* ---------- Hero phone: home / question screens ---------- */
-  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
-  var hpScreen = document.getElementById('hpScreen');
-  var ICON_CHEVRON = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>';
-  var ICON_STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c0 4.6 1.5 8 5 10-3.5 2-5 5.4-5 10-0-4.6-1.5-8-5-10 3.5-2 5-5.4 5-10Z"/></svg>';
-  var ICON_VISA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.3" r="1.6"/><path d="M6 15c.4-1.3 1.6-2 2.5-2s2.1.7 2.5 2M14 9h5M14 12.5h5M14 16h3.5"/></svg>';
-  var ICON_HOME = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-6h2v6h4a1 1 0 0 0 1-1v-9"/></svg>';
-  var ICON_WALLET = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.2" r="1" fill="currentColor" stroke="none"/></svg>';
-  var ICON_SEND = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11 21 3l-8 18-2-8-8-2Z"/></svg>';
+  /* ---------- Screenshot carousel: scroll parallax + mouse-proximity magnify ---------- */
+  var shotsScroll = document.querySelector('.shots-scroll');
+  if(shotsScroll && !reduceMotion){
+    var shotCards = Array.prototype.slice.call(shotsScroll.querySelectorAll('.shot-card'));
+    var shotImgs = shotCards.map(function(c){ return c.querySelector('img'); });
+    var shotOffsets = shotCards.map(function(){ return 0; });
+    var shotScales = shotCards.map(function(){ return 1.08; });
 
-  function screenHomeHTML(){
-    return '<div class="hp-badge-circle">' + ICON_STAR + '</div>' +
-    '<h3 class="hp-headline">' + t('hp.home.headline') + '</h3>' +
-    '<p class="hp-sub">' + t('hp.home.sub') + '</p>' +
-    '<div class="hp-cardlist">' +
-      '<div class="hp-card"><span class="ic">' + ICON_VISA + '</span><span class="tx"><b>' + t('hp.home.visa.title') + '</b><span>' + t('hp.home.visa.desc') + '</span></span>' + ICON_CHEVRON + '</div>' +
-      '<div class="hp-card"><span class="ic">' + ICON_HOME + '</span><span class="tx"><b>' + t('hp.home.stay.title') + '</b><span>' + t('hp.home.stay.desc') + '</span></span>' + ICON_CHEVRON + '</div>' +
-      '<div class="hp-card"><span class="ic">' + ICON_WALLET + '</span><span class="tx"><b>' + t('hp.home.finance.title') + '</b><span>' + t('hp.home.finance.desc') + '</span></span>' + ICON_CHEVRON + '</div>' +
-    '</div>';
-  }
+    function renderShots(){
+      shotImgs.forEach(function(img, i){
+        img.style.transform = 'translateX(' + shotOffsets[i].toFixed(1) + 'px) scale(' + shotScales[i].toFixed(3) + ')';
+      });
+    }
 
-  function screenQuestionsHTML(){
-    return '<div class="hp-badge-circle">' + ICON_STAR + '</div>' +
-    '<h3 class="hp-headline">' + t('hp.q.headline') + '</h3>' +
-    '<p class="hp-sub">' + t('hp.q.sub') + '</p>' +
-    '<div class="hp-chips">' +
-      '<div class="hp-chip">' + t('hp.q.chip1') + '</div>' +
-      '<div class="hp-chip">' + t('hp.q.chip2') + '</div>' +
-      '<div class="hp-chip">' + t('hp.q.chip3') + '</div>' +
-    '</div>' +
-    '<div class="hp-bottom">' +
-      '<div class="hp-back">' + t('hp.q.back') + '</div>' +
-      '<div class="hp-inputbar"><span class="hp-input-text">' + t('hp.q.inputPlaceholder') + '</span><span class="hp-send">' + ICON_SEND + '</span></div>' +
-    '</div>';
-  }
+    var shotsScrollTicking = false;
+    function updateShotsScrollParallax(){
+      var containerRect = shotsScroll.getBoundingClientRect();
+      var centerX = containerRect.left + containerRect.width / 2;
+      shotCards.forEach(function(card, i){
+        var rect = card.getBoundingClientRect();
+        var cardCenter = rect.left + rect.width / 2;
+        var delta = (cardCenter - centerX) / containerRect.width;
+        if(delta > 1) delta = 1;
+        if(delta < -1) delta = -1;
+        shotOffsets[i] = delta * -16;
+      });
+      renderShots();
+      shotsScrollTicking = false;
+    }
+    shotsScroll.addEventListener('scroll', function(){
+      if(!shotsScrollTicking){ shotsScrollTicking = true; requestAnimationFrame(updateShotsScrollParallax); }
+    }, {passive:true});
+    window.addEventListener('resize', updateShotsScrollParallax);
+    updateShotsScrollParallax();
 
-  var SCREENS = [screenHomeHTML, screenQuestionsHTML];
-  var screenIndex = 0;
-  var screenCancelled = false;
-
-  function showScreen(idx){
-    if(hpScreen) hpScreen.innerHTML = SCREENS[idx]();
-  }
-  function cycleScreens(){
-    if(!hpScreen || screenCancelled) return;
-    hpScreen.classList.add('fade');
-    wait(280).then(function(){
-      screenIndex = (screenIndex + 1) % SCREENS.length;
-      showScreen(screenIndex);
-      hpScreen.classList.remove('fade');
-      return wait(4200);
-    }).then(function(){
-      if(!screenCancelled) cycleScreens();
+    var shotsMouseTicking = false;
+    var pendingMouseX = null;
+    function updateShotsMagnify(){
+      if(pendingMouseX !== null){
+        var maxDist = 340;
+        shotCards.forEach(function(card, i){
+          var rect = card.getBoundingClientRect();
+          var cardCenter = rect.left + rect.width / 2;
+          var dist = Math.abs(pendingMouseX - cardCenter);
+          var proximity = Math.max(0, 1 - dist / maxDist);
+          proximity = proximity * proximity;
+          shotScales[i] = 1.02 + proximity * 0.22;
+        });
+      }
+      renderShots();
+      shotsMouseTicking = false;
+    }
+    shotsScroll.addEventListener('mousemove', function(e){
+      pendingMouseX = e.clientX;
+      if(!shotsMouseTicking){ shotsMouseTicking = true; requestAnimationFrame(updateShotsMagnify); }
     });
-  }
-  if(hpScreen){
-    showScreen(0);
-    if(!reduceMotion){ wait(4200).then(cycleScreens); }
-  }
-
-  /* ---------- 360° drag rotation + idle spin ---------- */
-  var hpFlipper = document.getElementById('hpFlipper');
-  if(hpFlipper){
-    var flipRotation = 0;
-    var isDragging = false;
-    var dragConfirmed = false;
-    var dragStartX = 0, dragStartY = 0, dragStartRotation = 0;
-    var idleDegPerSec = 360 / 30;
-    var lastFrameTime = null;
-
-    function applyFlip(){
-      hpFlipper.style.transform = 'rotateY(' + flipRotation.toFixed(2) + 'deg)';
-    }
-    function idleTick(ts){
-      if(lastFrameTime === null) lastFrameTime = ts;
-      var dt = (ts - lastFrameTime) / 1000;
-      lastFrameTime = ts;
-      if(!isDragging){
-        flipRotation += idleDegPerSec * dt;
-        applyFlip();
-      }
-      requestAnimationFrame(idleTick);
-    }
-    applyFlip();
-    if(!reduceMotion){ requestAnimationFrame(idleTick); }
-
-    function pointFrom(e){ return e.touches ? e.touches[0] : e; }
-    function onDown(e){
-      isDragging = true;
-      dragConfirmed = (e.type === 'mousedown');
-      var p = pointFrom(e);
-      dragStartX = p.clientX; dragStartY = p.clientY; dragStartRotation = flipRotation;
-      lastFrameTime = null;
-      if(dragConfirmed) hpFlipper.classList.add('dragging');
-    }
-    function onMove(e){
-      if(!isDragging) return;
-      var p = pointFrom(e);
-      var dx = p.clientX - dragStartX, dy = p.clientY - dragStartY;
-      if(!dragConfirmed){
-        if(Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-        if(Math.abs(dx) <= Math.abs(dy)){ isDragging = false; return; }
-        dragConfirmed = true;
-        hpFlipper.classList.add('dragging');
-      }
-      flipRotation = dragStartRotation + dx * 0.5;
-      applyFlip();
-      if(e.cancelable) e.preventDefault();
-    }
-    function onUp(){
-      isDragging = false;
-      dragConfirmed = false;
-      lastFrameTime = null;
-      hpFlipper.classList.remove('dragging');
-    }
-    hpFlipper.addEventListener('mousedown', onDown);
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    hpFlipper.addEventListener('touchstart', onDown, {passive:true});
-    hpFlipper.addEventListener('touchmove', onMove, {passive:false});
-    hpFlipper.addEventListener('touchend', onUp);
-    hpFlipper.addEventListener('touchcancel', onUp);
+    shotsScroll.addEventListener('mouseleave', function(){
+      pendingMouseX = null;
+      shotScales = shotCards.map(function(){ return 1.08; });
+      renderShots();
+    });
   }
 
   applyLang(currentLang);
+})();
+</script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+(async function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var currentLang = document.documentElement.lang || 'ko';
+  if(currentLang !== 'ko' && currentLang !== 'en') currentLang = 'ko';
+
+  var stageEl = document.getElementById('phoneStage');
+  var containerEl = document.getElementById('heroPhone3D');
+  var fallbackImg = document.getElementById('heroPhoneFallback');
+  var bgPhotoEl = document.getElementById('heroBgPhoto');
+  if(!stageEl || !containerEl || !fallbackImg) return;
+
+  /* ---- Background photo: subtle scroll-linked zoom (independent of 3D/fallback) ---- */
+  if(bgPhotoEl && !reduceMotion){
+    var bgZoomTicking = false;
+    function updateBgZoom(){
+      var rect = stageEl.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var center = rect.top + rect.height / 2;
+      var progress = (vh / 2 - center) / vh;
+      progress = Math.max(-1, Math.min(1, progress));
+      var scale = 1 + Math.abs(progress) * 0.09;
+      bgPhotoEl.style.transform = 'scale(' + scale.toFixed(4) + ')';
+      bgZoomTicking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if(!bgZoomTicking){ bgZoomTicking = true; requestAnimationFrame(updateBgZoom); }
+    }, {passive:true});
+    window.addEventListener('resize', updateBgZoom);
+    updateBgZoom();
+  }
+
+  /* ================= Fallback path (static photo cutout) ================= */
+  /* Used when WebGL / the 3D model is unavailable. Mirrors the old scroll-tilt,
+     mouse-tilt, spring-in and home/question crossfade behavior on the flat image. */
+  var fallbackState = 'home';
+  var fallbackCancelled = false;
+  var fallbackActive = false;
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  function applyFallbackSrc(){
+    var src = fallbackImg.getAttribute('data-src-' + fallbackState + '-' + currentLang);
+    if(src) fallbackImg.src = src;
+  }
+  function cycleFallback(){
+    if(fallbackCancelled) return;
+    fallbackImg.classList.add('crossfade');
+    wait(350).then(function(){
+      fallbackState = (fallbackState === 'home') ? 'question' : 'home';
+      applyFallbackSrc();
+      fallbackImg.classList.remove('crossfade');
+      return wait(4200);
+    }).then(function(){
+      if(!fallbackCancelled) cycleFallback();
+    });
+  }
+  var fbScrollY = 0, fbScrollRotate = 0, fbMouseX = 0, fbMouseY = 0;
+  function renderFallbackTransform(){
+    fallbackImg.style.transform =
+      'translateY(' + fbScrollY.toFixed(1) + 'px) rotate(' + fbScrollRotate.toFixed(2) + 'deg) ' +
+      'perspective(900px) rotateX(' + fbMouseX.toFixed(2) + 'deg) rotateY(' + fbMouseY.toFixed(2) + 'deg)';
+  }
+  function setupFallback(){
+    if(fallbackActive) return;
+    fallbackActive = true;
+    containerEl.classList.add('hp-hidden');
+    fallbackImg.classList.remove('hp-hidden');
+    if(!reduceMotion){
+      var tickingF = false, pendingEv = null;
+      function updateTilt(){
+        if(pendingEv){
+          var r = stageEl.getBoundingClientRect();
+          var px = (pendingEv.clientX - (r.left + r.width / 2)) / (r.width / 2);
+          var py = (pendingEv.clientY - (r.top + r.height / 2)) / (r.height / 2);
+          px = Math.max(-1, Math.min(1, px));
+          py = Math.max(-1, Math.min(1, py));
+          fbMouseY = px * 9; fbMouseX = py * -9;
+          renderFallbackTransform();
+        }
+        tickingF = false;
+      }
+      stageEl.addEventListener('mousemove', function(e){
+        pendingEv = e;
+        if(!tickingF){ tickingF = true; requestAnimationFrame(updateTilt); }
+      });
+      stageEl.addEventListener('mouseleave', function(){
+        pendingEv = null; fbMouseX = 0; fbMouseY = 0; renderFallbackTransform();
+      });
+      var scrollTicking = false;
+      function updateScroll(){
+        var rect = stageEl.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var center = rect.top + rect.height / 2;
+        var progress = (vh / 2 - center) / vh;
+        progress = Math.max(-1, Math.min(1, progress));
+        fbScrollY = progress * 36;
+        fbScrollRotate = progress * 5;
+        renderFallbackTransform();
+        scrollTicking = false;
+      }
+      window.addEventListener('scroll', function(){
+        if(!scrollTicking){ scrollTicking = true; requestAnimationFrame(updateScroll); }
+      }, {passive:true});
+      window.addEventListener('resize', updateScroll);
+      updateScroll();
+      if('IntersectionObserver' in window){
+        var springIO = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(!entry.isIntersecting) return;
+            fallbackImg.classList.add('spring-in');
+            springIO.unobserve(entry.target);
+          });
+        }, {threshold:0.2});
+        springIO.observe(fallbackImg);
+      }
+      wait(4200).then(cycleFallback);
+    }
+    document.addEventListener('askovisa:langchange', function(e){
+      currentLang = e.detail.lang;
+      applyFallbackSrc();
+    });
+  }
+
+  /* ================= 3D path ================= */
+  function hasWebGL(){
+    try {
+      var c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl') || c.getContext('experimental-webgl')));
+    } catch(e){ return false; }
+  }
+
+  if(!hasWebGL()){ setupFallback(); return; }
+
+  try {
+    var THREE_V = '0.160.0';
+    var THREE = await import('three');
+    var GLTFLoaderMod = await import('three/addons/loaders/GLTFLoader.js');
+    var DRACOLoaderMod = await import('three/addons/loaders/DRACOLoader.js');
+    var RoomEnvMod = await import('three/addons/environments/RoomEnvironment.js');
+
+    var renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    containerEl.appendChild(renderer.domElement);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 20);
+
+    var pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvMod.RoomEnvironment(), 0.04).texture;
+
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x33302a, 0.55));
+    var keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
+    keyLight.position.set(2.2, 3, 2.6);
+    scene.add(keyLight);
+    var fillLight = new THREE.DirectionalLight(0xffe9bd, 0.5);
+    fillLight.position.set(-2.5, -1, 1.8);
+    scene.add(fillLight);
+
+    var rig = new THREE.Group();
+    scene.add(rig);
+
+    function sizeRenderer(){
+      var w = containerEl.clientWidth || 280;
+      var h = containerEl.clientHeight || 480;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    sizeRenderer();
+
+    var loader = new GLTFLoaderMod.GLTFLoader();
+    var draco = new DRACOLoaderMod.DRACOLoader();
+    draco.setDecoderPath('https://unpkg.com/three@' + THREE_V + '/examples/jsm/libs/draco/');
+    loader.setDRACOLoader(draco);
+
+    var gltf = await Promise.race([
+      new Promise(function(resolve, reject){ loader.load('assets/3d/phone.glb', resolve, undefined, reject); }),
+      new Promise(function(_, reject){ setTimeout(function(){ reject(new Error('3d model load timeout')); }, 12000); })
+    ]);
+
+    var model = gltf.scene;
+    var box = new THREE.Box3().setFromObject(model);
+    var size = new THREE.Vector3(); box.getSize(size);
+    var center = new THREE.Vector3(); box.getCenter(center);
+    model.position.sub(center);
+    var targetHeight = 1.7;
+    var modelScale = targetHeight / size.y;
+    model.scale.setScalar(modelScale);
+    rig.add(model);
+
+    /* The source mesh's own "Pantalla" (screen) material/UVs render duplicated
+       ghosting at raking angles, so it's neutralized to a plain dark backing and
+       a fresh, correctly-UV'd plane is overlaid just in front to carry our texture. */
+    var pantallaNode = null;
+    model.traverse(function(node){
+      if(node.isMesh && node.material){
+        var mats = Array.isArray(node.material) ? node.material : [node.material];
+        mats.forEach(function(m){ if(m.name === 'Pantalla'){ pantallaNode = node; m.color.set(0x000000); m.emissive.set(0x000000); m.needsUpdate = true; } });
+      }
+    });
+
+    var screenPlane = null;
+    if(pantallaNode){
+      pantallaNode.geometry.computeBoundingBox();
+      var sbb = pantallaNode.geometry.boundingBox;
+      screenPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(sbb.max.x - sbb.min.x, sbb.max.z - sbb.min.z),
+        new THREE.MeshBasicMaterial({toneMapped:false, side:THREE.DoubleSide})
+      );
+      screenPlane.rotation.x = Math.PI / 2;
+      screenPlane.position.set((sbb.max.x + sbb.min.x) / 2, sbb.max.y + 0.04, (sbb.max.z + sbb.min.z) / 2);
+      pantallaNode.add(screenPlane);
+    }
+
+    var texLoader = new THREE.TextureLoader();
+    var texCache = {};
+    function loadTex(url){
+      if(texCache[url]) return Promise.resolve(texCache[url]);
+      return new Promise(function(resolve){
+        texLoader.load(url, function(tex){
+          tex.colorSpace = THREE.SRGBColorSpace;
+          tex.flipY = false;
+          tex.needsUpdate = true;
+          texCache[url] = tex;
+          resolve(tex);
+        });
+      });
+    }
+
+    var SCREEN_SRC = {
+      'home-ko':'assets/3d/screen-home-kr.jpg', 'home-en':'assets/3d/screen-home-en.jpg',
+      'question-ko':'assets/3d/screen-question-kr.jpg', 'question-en':'assets/3d/screen-question-en.jpg'
+    };
+    var screenState = 'home';
+    function screenKey(){ return screenState + '-' + currentLang; }
+
+    var firstTex = await loadTex(SCREEN_SRC[screenKey()]);
+    if(screenPlane){ screenPlane.material.map = firstTex; screenPlane.material.needsUpdate = true; }
+
+    function fitCamera(){
+      var w = containerEl.clientWidth || 280, h = containerEl.clientHeight || 480;
+      var aspect = w / h;
+      var vFov = camera.fov * Math.PI / 180;
+      var halfH = (size.y * modelScale) / 2, halfW = (size.x * modelScale) / 2;
+      var distH = halfH / Math.tan(vFov / 2);
+      var distW = halfW / (aspect * Math.tan(vFov / 2));
+      camera.position.z = Math.max(distH, distW) * 1.6;
+      camera.updateProjectionMatrix();
+    }
+    fitCamera();
+
+    /* ---- interaction state ---- */
+    var autoYaw = 0.35;
+    var dragging = false, dragYaw = 0, dragStartX = 0, dragStartY = 0, dragStartYaw = 0, dragStartPitch = 0, pitchDeg = 0;
+    var pitchDecayFrom = null, pitchDecayStart = 0;
+    var hoverYaw = 0, hoverPitch = 0;
+    var scrollYaw = 0, scrollBob = 0;
+
+    var canvasEl = renderer.domElement;
+    canvasEl.addEventListener('pointerdown', function(e){
+      dragging = true;
+      dragStartX = e.clientX; dragStartY = e.clientY;
+      dragStartYaw = autoYaw; dragYaw = 0;
+      dragStartPitch = pitchDeg;
+      pitchDecayFrom = null;
+      try { canvasEl.setPointerCapture(e.pointerId); } catch(err){}
+    });
+    canvasEl.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var dx = e.clientX - dragStartX, dy = e.clientY - dragStartY;
+      dragYaw = dx * 0.012;
+      pitchDeg = Math.max(-22, Math.min(22, dragStartPitch + dy * 0.09));
+    });
+    function endDrag(){
+      if(!dragging) return;
+      dragging = false;
+      autoYaw = dragStartYaw + dragYaw;
+      dragYaw = 0;
+      pitchDecayFrom = pitchDeg;
+      pitchDecayStart = performance.now();
+    }
+    canvasEl.addEventListener('pointerup', endDrag);
+    canvasEl.addEventListener('pointercancel', endDrag);
+
+    if(!reduceMotion){
+      stageEl.addEventListener('mousemove', function(e){
+        if(dragging) return;
+        var r = stageEl.getBoundingClientRect();
+        var px = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+        var py = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+        px = Math.max(-1, Math.min(1, px)); py = Math.max(-1, Math.min(1, py));
+        hoverYaw = px * 0.18; hoverPitch = py * -10;
+      });
+      stageEl.addEventListener('mouseleave', function(){ hoverYaw = 0; hoverPitch = 0; });
+    }
+
+    var scrollTicking3D = false;
+    function updateScroll3D(){
+      var rect = stageEl.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var center = rect.top + rect.height / 2;
+      var progress = (vh / 2 - center) / vh;
+      progress = Math.max(-1, Math.min(1, progress));
+      scrollYaw = progress * 0.12;
+      scrollBob = progress * -0.12;
+      scrollTicking3D = false;
+    }
+    window.addEventListener('scroll', function(){
+      if(!scrollTicking3D){ scrollTicking3D = true; requestAnimationFrame(updateScroll3D); }
+    }, {passive:true});
+    window.addEventListener('resize', function(){ sizeRenderer(); fitCamera(); updateScroll3D(); });
+    updateScroll3D();
+
+    /* ---- spring entrance ---- */
+    function easeOutBack(t){ var c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
+    var currentVisualScale = reduceMotion ? 1 : 0;
+    var entranceStart = null;
+    if(!reduceMotion && 'IntersectionObserver' in window){
+      var springIO3D = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting) return;
+          entranceStart = performance.now();
+          springIO3D.unobserve(entry.target);
+        });
+      }, {threshold:0.2});
+      springIO3D.observe(containerEl);
+    } else {
+      currentVisualScale = 1;
+    }
+
+    /* ---- screen content crossfade ---- */
+    function tweenValue(duration, onUpdate, onDone){
+      var start = null;
+      function step(ts){
+        if(start === null) start = ts;
+        var p = Math.min(1, (ts - start) / duration);
+        onUpdate(p);
+        if(p < 1) requestAnimationFrame(step); else if(onDone) onDone();
+      }
+      requestAnimationFrame(step);
+    }
+    if(screenPlane){ screenPlane.material.transparent = true; }
+    function cycle3D(){
+      if(reduceMotion) return;
+      tweenValue(350, function(p){
+        if(screenPlane) screenPlane.material.opacity = 1 - p * 0.95;
+      }, function(){
+        screenState = (screenState === 'home') ? 'question' : 'home';
+        loadTex(SCREEN_SRC[screenKey()]).then(function(tex){
+          if(screenPlane){ screenPlane.material.map = tex; screenPlane.material.needsUpdate = true; }
+          tweenValue(350, function(p){
+            if(screenPlane) screenPlane.material.opacity = 0.05 + p * 0.95;
+          }, function(){
+            setTimeout(cycle3D, 4200);
+          });
+        });
+      });
+    }
+    if(!reduceMotion) setTimeout(cycle3D, 4200);
+
+    document.addEventListener('askovisa:langchange', function(e){
+      currentLang = e.detail.lang;
+      loadTex(SCREEN_SRC[screenKey()]).then(function(tex){
+        if(screenPlane){ screenPlane.material.map = tex; screenPlane.material.needsUpdate = true; }
+      });
+    });
+
+    /* ---- render loop ---- */
+    function animate(){
+      requestAnimationFrame(animate);
+      if(document.hidden) return;
+
+      if(!dragging && !reduceMotion){ autoYaw += 0.0028; }
+
+      var pitch = 0;
+      if(dragging){
+        pitch = pitchDeg;
+      } else if(pitchDecayFrom !== null){
+        var elapsed = performance.now() - pitchDecayStart;
+        var p = Math.min(1, elapsed / 450);
+        pitch = pitchDecayFrom * (1 - p);
+        if(p >= 1) pitchDecayFrom = null;
+      }
+
+      var entranceYawKick = 0;
+      if(entranceStart !== null){
+        var elapsed2 = performance.now() - entranceStart;
+        var p2 = Math.min(1, elapsed2 / 900);
+        var eased2 = easeOutBack(p2);
+        currentVisualScale = Math.max(0, eased2);
+        entranceYawKick = (1 - eased2) * -0.6;
+        if(p2 >= 1) entranceStart = null;
+      }
+
+      rig.rotation.y = autoYaw + (dragging ? dragYaw : 0) + hoverYaw + scrollYaw + entranceYawKick;
+      rig.rotation.x = (pitch + hoverPitch) * Math.PI / 180;
+      rig.position.y = scrollBob;
+      rig.scale.setScalar(currentVisualScale);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    renderer.domElement.classList.add('hp3d-ready');
+    containerEl.classList.remove('hp-hidden');
+    fallbackImg.classList.add('hp-hidden');
+  } catch(err){
+    console.warn('ASKOVISA hero 3D unavailable, using fallback photo:', err);
+    setupFallback();
+  }
 })();
 </script>
 
