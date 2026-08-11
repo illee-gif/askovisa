@@ -1389,10 +1389,16 @@
       var sbb = pantallaNode.geometry.boundingBox;
       screenPlane = new THREE.Mesh(
         new THREE.PlaneGeometry(sbb.max.x - sbb.min.x, sbb.max.z - sbb.min.z),
-        new THREE.MeshBasicMaterial({toneMapped:false, side:THREE.DoubleSide})
+        new THREE.MeshBasicMaterial({
+          toneMapped:false, side:THREE.DoubleSide,
+          polygonOffset:true, polygonOffsetFactor:-4, polygonOffsetUnits:-4
+        })
       );
+      /* Sit flush on the glass — the phone is only ~0.099 units thick, so any
+         meaningful gap here reads as the screen sliding out of its bezel when
+         the model is viewed at an angle. polygonOffset keeps it z-fight free. */
       screenPlane.rotation.x = Math.PI / 2;
-      screenPlane.position.set((sbb.max.x + sbb.min.x) / 2, sbb.max.y + 0.04, (sbb.max.z + sbb.min.z) / 2);
+      screenPlane.position.set((sbb.max.x + sbb.min.x) / 2, sbb.max.y + 0.001, (sbb.max.z + sbb.min.z) / 2);
       pantallaNode.add(screenPlane);
     }
 
