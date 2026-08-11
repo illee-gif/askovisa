@@ -43,9 +43,35 @@
   }
   img,svg{max-width:100%;display:block;}
   a{color:inherit;text-decoration:none;}
-  .container{width:100%;max-width:1180px;margin:0 auto;padding:0 32px;}
+  .container{width:100%;max-width:1180px;margin:0 auto;position:relative;z-index:1;padding:0 32px;}
   @media (max-width:640px){ .container{padding:0 20px;} }
   section{padding:120px 0;}
+  #about{position:relative;overflow:hidden;}
+
+  /* ---------- Faint grayscale photo backdrops ---------- */
+  .section-photo{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-size:cover;background-repeat:no-repeat;
+    filter:grayscale(1) contrast(1.05);
+    /* Fade out at the edges so the photo dissolves into the page instead of
+       ending on a hard rectangle. */
+    -webkit-mask-image:radial-gradient(120% 88% at 50% 42%, #000 12%, transparent 78%);
+    mask-image:radial-gradient(120% 88% at 50% 42%, #000 12%, transparent 78%);
+  }
+  .section-photo--immigration{
+    background-image:url("assets/bg-immigration.jpg");
+    background-position:center 22%;
+    opacity:.14;
+  }
+  .section-photo--team{
+    background-image:url("assets/bg-apil-team.jpg");
+    background-position:center 40%;
+    opacity:.13;
+  }
+  @media (max-width:640px){
+    .section-photo--immigration{opacity:.10;}
+    .section-photo--team{opacity:.09;}
+  }
   @media (max-width:900px){ section{padding:88px 0;} }
   @media (max-width:640px){ section{padding:64px 0;} }
   .mono{font-family:var(--mono);}
@@ -468,6 +494,7 @@
 </div>
 
 <section class="hero">
+  <div class="section-photo section-photo--immigration" aria-hidden="true"></div>
   <div class="container">
     <div class="hero-top">
       <div>
@@ -530,6 +557,7 @@
 </section>
 
 <section id="about">
+  <div class="section-photo section-photo--team" aria-hidden="true"></div>
   <div class="container">
     <p class="quote reveal" data-i18n="about.quote">
       이주민과 난민은 한국에서 체류자격, 사증, 금융서비스 등 생활에 꼭 필요한 정보를
