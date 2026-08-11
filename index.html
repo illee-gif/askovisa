@@ -250,6 +250,37 @@
   .num-row .title{font-size:19px;font-weight:600;letter-spacing:-0.01em;}
   .num-row .tag{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.06em;}
 
+  /* ---------- Media coverage ---------- */
+  .press-list{margin-top:0;}
+  .press-row{
+    display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:28px;
+    padding:30px 0;border-bottom:1px solid var(--line);
+    text-decoration:none;color:inherit;transition:border-color .3s ease;
+  }
+  .press-row:first-child{border-top:1px solid var(--line);}
+  .press-row:hover{border-color:var(--gold);}
+  .press-idx{font-family:var(--mono);color:var(--gold);font-size:13px;font-weight:700;padding-top:4px;}
+  .press-outlet{
+    font-family:var(--mono);font-size:11.5px;color:var(--muted-2);
+    text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;
+  }
+  .press-title{
+    font-size:20px;font-weight:600;letter-spacing:-0.01em;line-height:1.45;margin:0 0 10px;
+    transition:color .25s ease;
+  }
+  .press-row:hover .press-title{color:var(--gold);}
+  .press-desc{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted);margin:0;max-width:620px;}
+  .press-go{
+    font-family:var(--mono);font-size:12px;color:var(--muted-2);white-space:nowrap;padding-top:4px;
+    transition:color .25s ease,transform .25s ease;
+  }
+  .press-row:hover .press-go{color:var(--gold);transform:translateX(4px);}
+  @media (max-width:700px){
+    .press-row{grid-template-columns:auto 1fr;gap:16px;}
+    .press-go{grid-column:2;padding-top:12px;}
+    .press-title{font-size:17px;}
+  }
+
   /* ---------- Language grid (logo-grid style) ---------- */
   .lang-grid{display:grid;grid-template-columns:repeat(5,1fr);}
   @media (max-width:800px){ .lang-grid{grid-template-columns:repeat(3,1fr);} }
@@ -575,6 +606,46 @@
   </div>
 </section>
 
+<section id="press">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">Media Coverage</span>
+        <h2 data-i18n="press.h2">언론이 주목한 ASKOVISA</h2>
+      </div>
+    </div>
+    <div class="press-list">
+      <a class="press-row reveal" href="https://hi-ai.kr/usecase/14/" target="_blank" rel="noopener">
+        <span class="press-idx">01</span>
+        <span>
+          <span class="press-outlet" data-i18n="press1.outlet">홍익지능 · 2026.06.23</span>
+          <h3 class="press-title" data-i18n="press1.title">비영리 공익 변호사 단체가 만든 AI 챗봇: ASKOVISA</h3>
+          <p class="press-desc" data-i18n="press1.desc">공식 매뉴얼에 근거해 답변하고 대화 내용을 저장하지 않는 설계로, 정확성과 프라이버시를 함께 잡은 9개 언어 챗봇으로 소개됐습니다.</p>
+        </span>
+        <span class="press-go" data-i18n="press.go">원문 보기 →</span>
+      </a>
+      <a class="press-row reveal" href="https://futurechosun.com/archives/144914" target="_blank" rel="noopener">
+        <span class="press-idx">02</span>
+        <span>
+          <span class="press-outlet" data-i18n="press2.outlet">더나은미래 · 2026.03.17</span>
+          <h3 class="press-title" data-i18n="press2.title">“한국인과 결혼했는데 비자는요?” 이주민·난민 전용 AI 챗봇 나왔다</h3>
+          <p class="press-desc" data-i18n="press2.desc">출입국 매뉴얼을 학습해 잘못된 정보가 체류 자격에 미칠 위험을 줄였다는 점에 주목하며, 어필이 만든 무료 다국어 챗봇을 조명했습니다.</p>
+        </span>
+        <span class="press-go" data-i18n="press.go">원문 보기 →</span>
+      </a>
+      <a class="press-row reveal" href="https://v.daum.net/v/20260121002333713" target="_blank" rel="noopener">
+        <span class="press-idx">03</span>
+        <span>
+          <span class="press-outlet" data-i18n="press3.outlet">경상일보 · 2026.01.21</span>
+          <h3 class="press-title" data-i18n="press3.title">‘이주민-선주민 소통’으로 지역 소멸 막아야</h3>
+          <p class="press-desc" data-i18n="press3.desc">지역 소멸 대응을 다루며, 어필과 협력해 선보인 외국인 법률 안내 앱 ASKOVISA를 이주민 정착 지원 사례로 언급했습니다.</p>
+        </span>
+        <span class="press-go" data-i18n="press.go">원문 보기 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="features">
   <div class="container">
     <div class="row-head">
@@ -893,6 +964,17 @@
       'feature4.title':'다국어 지원', 'feature4.desc':'영어, 중국어, 베트남어, 태국어, 우즈베키스탄어, 러시아어, 아랍어, 프랑스어, 한국어까지 9개 언어를 지원합니다.',
       'feature5.title':'현실적인 안내', 'feature5.desc':'전문 상담을 대체하지는 않지만, 기본적인 정보를 제공해 올바른 방향으로 나아갈 수 있도록 안내합니다.',
       'shots.h2':'실제 화면으로 확인하세요',
+      'press.h2':'언론이 주목한 ASKOVISA',
+      'press.go':'원문 보기 →',
+      'press1.outlet':'홍익지능 · 2026.06.23',
+      'press1.title':'비영리 공익 변호사 단체가 만든 AI 챗봇: ASKOVISA',
+      'press1.desc':'공식 매뉴얼에 근거해 답변하고 대화 내용을 저장하지 않는 설계로, 정확성과 프라이버시를 함께 잡은 9개 언어 챗봇으로 소개됐습니다.',
+      'press2.outlet':'더나은미래 · 2026.03.17',
+      'press2.title':'“한국인과 결혼했는데 비자는요?” 이주민·난민 전용 AI 챗봇 나왔다',
+      'press2.desc':'출입국 매뉴얼을 학습해 잘못된 정보가 체류 자격에 미칠 위험을 줄였다는 점에 주목하며, 어필이 만든 무료 다국어 챗봇을 조명했습니다.',
+      'press3.outlet':'경상일보 · 2026.01.21',
+      'press3.title':'‘이주민-선주민 소통’으로 지역 소멸 막아야',
+      'press3.desc':'지역 소멸 대응을 다루며, 어필과 협력해 선보인 외국인 법률 안내 앱 ASKOVISA를 이주민 정착 지원 사례로 언급했습니다.',
       'numlist.h2':'주요 정보 제공 분야',
       'numlist.row1':'입국 사증(비자)', 'numlist.row2':'체류자격', 'numlist.row3':'외국인등록',
       'numlist.row4':'통장 개설', 'numlist.row5':'4대 보험', 'numlist.row6':'체류 연장·변경',
@@ -937,6 +1019,17 @@
       'feature4.title':'Multilingual', 'feature4.desc':'Supports 9 languages: English, Chinese, Vietnamese, Thai, Uzbek, Russian, Arabic, French, and Korean.',
       'feature5.title':'Practical Guidance', 'feature5.desc':'Not a replacement for professional advice — but enough to point you in the right direction.',
       'shots.h2':'See It In Action',
+      'press.h2':'ASKOVISA in the Media',
+      'press.go':'Read the article →',
+      'press1.outlet':'Hongik Intelligence · Jun 23, 2026',
+      'press1.title':'An AI chatbot built by a non-profit public interest law group: ASKOVISA',
+      'press1.desc':'Profiled as a nine-language chatbot that answers from official immigration manuals and stores no chat history — accuracy and privacy in one design.',
+      'press2.outlet':'The Better Future · Mar 17, 2026',
+      'press2.title':'“I married a Korean — what about my visa?” An AI chatbot just launched for migrants and refugees',
+      'press2.desc':'Highlights how training on official immigration manuals lowers the risk of bad information affecting someone\'s residence status, and spotlights APIL\'s free multilingual chatbot.',
+      'press3.outlet':'Gyeongsang Ilbo · Jan 21, 2026',
+      'press3.title':'Stopping regional decline through migrant–resident communication',
+      'press3.desc':'On responses to regional depopulation, citing ASKOVISA — the legal guidance app for foreign residents built with APIL — as an example of settlement support.',
       'numlist.h2':'What We Cover',
       'numlist.row1':'Entry Visa', 'numlist.row2':'Residence Status', 'numlist.row3':'ARC Registration',
       'numlist.row4':'Bank Account', 'numlist.row5':'Social Insurance', 'numlist.row6':'Extension / Change',
