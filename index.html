@@ -1607,6 +1607,12 @@
       drawWordmark();
       var markTex = new THREE.CanvasTexture(markCanvas);
       markTex.colorSpace = THREE.SRGBColorSpace;
+      /* The back panel is only ever seen from behind, so the plane presents its
+         reverse face and the text would read mirrored. Flip the texture on U to
+         cancel that out. */
+      markTex.wrapS = THREE.RepeatWrapping;
+      markTex.repeat.x = -1;
+      markTex.offset.x = 1;
       if(document.fonts && document.fonts.ready){
         document.fonts.ready.then(function(){ drawWordmark(); markTex.needsUpdate = true; });
       }
