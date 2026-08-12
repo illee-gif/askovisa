@@ -255,35 +255,35 @@
   .num-row .title{font-size:19px;font-weight:600;letter-spacing:-0.01em;}
   .num-row .tag{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.06em;}
 
-  /* ---------- Media coverage ---------- */
-  .press-list{margin-top:0;}
-  .press-row{
+  /* ---------- Linked news rows (media coverage + product updates) ---------- */
+  .news-list{margin-top:0;}
+  .news-row{
     display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:28px;
     padding:30px 0;border-bottom:1px solid var(--line);
     text-decoration:none;color:inherit;transition:border-color .3s ease;
   }
-  .press-row:first-child{border-top:1px solid var(--line);}
-  .press-row:hover{border-color:var(--gold);}
-  .press-idx{font-family:var(--mono);color:var(--gold);font-size:13px;font-weight:700;padding-top:4px;}
-  .press-outlet{
+  .news-row:first-child{border-top:1px solid var(--line);}
+  .news-row:hover{border-color:var(--gold);}
+  .news-idx{font-family:var(--mono);color:var(--gold);font-size:13px;font-weight:700;padding-top:4px;}
+  .news-meta{
     font-family:var(--mono);font-size:11.5px;color:var(--muted-2);
     text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;
   }
-  .press-title{
+  .news-title{
     font-size:20px;font-weight:600;letter-spacing:-0.01em;line-height:1.45;margin:0 0 10px;
     transition:color .25s ease;
   }
-  .press-row:hover .press-title{color:var(--gold);}
-  .press-desc{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted);margin:0;max-width:620px;}
-  .press-go{
+  .news-row:hover .news-title{color:var(--gold);}
+  .news-desc{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted);margin:0;max-width:620px;}
+  .news-go{
     font-family:var(--mono);font-size:12px;color:var(--muted-2);white-space:nowrap;padding-top:4px;
     transition:color .25s ease,transform .25s ease;
   }
-  .press-row:hover .press-go{color:var(--gold);transform:translateX(4px);}
+  .news-row:hover .news-go{color:var(--gold);transform:translateX(4px);}
   @media (max-width:700px){
-    .press-row{grid-template-columns:auto 1fr;gap:16px;}
-    .press-go{grid-column:2;padding-top:12px;}
-    .press-title{font-size:17px;}
+    .news-row{grid-template-columns:auto 1fr;gap:16px;}
+    .news-go{grid-column:2;padding-top:12px;}
+    .news-title{font-size:17px;}
   }
 
   /* ---------- Language grid (logo-grid style) ---------- */
@@ -416,21 +416,29 @@
       linear-gradient(180deg, rgba(10,9,10,0.12) 0%, rgba(10,9,10,0.38) 55%, rgba(6,5,6,0.72) 100%),
       radial-gradient(140% 110% at 50% 122%, rgba(8,7,8,0.85), transparent 60%);
   }
+  /* Brand medallion sitting behind the phone, above the photo and its scrim. */
+  .hero-brandmark{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:clamp(200px,38vw,460px);aspect-ratio:1;z-index:2;pointer-events:none;
+    background:url("assets/favicon.png") center/contain no-repeat;
+    opacity:.20;
+  }
+  @media (max-width:560px){ .hero-brandmark{opacity:.15;} }
   .hero-phone-stage::before{
-    content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;mix-blend-mode:overlay;
+    content:"";position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.3;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
   .hero-phone{
     width:clamp(210px, 34vw, 440px);
     filter:drop-shadow(0 40px 70px rgba(0,0,0,0.55));will-change:transform;
-    position:relative;z-index:3;
+    position:relative;z-index:4;
   }
 
   /* ---------- Hero phone 3D (Three.js) ---------- */
   .hero-phone-3d{
     /* Large enough that the app UI on the screen stays legible. */
     width:clamp(250px, 46vw, 600px);aspect-ratio:7/12;
-    position:relative;z-index:3;touch-action:none;
+    position:relative;z-index:4;touch-action:none;
   }
   .hero-phone-3d.hp-hidden{display:none;}
   .hero-phone-3d canvas{
@@ -561,6 +569,7 @@
 
     <div class="hero-phone-stage" id="phoneStage">
       <div class="hero-bg-photo" id="heroBgPhoto" aria-hidden="true"></div>
+      <div class="hero-brandmark" aria-hidden="true"></div>
       <div class="hero-phone-3d hp-hidden" id="heroPhone3D" aria-hidden="true"></div>
       <img class="hero-phone hero-phone-fallback" id="heroPhoneFallback" src="assets/hero-phone-home-kr.png"
         data-src-home-ko="assets/hero-phone-home-kr.png" data-src-home-en="assets/hero-phone-home-en.png"
@@ -624,33 +633,33 @@
         <h2 data-i18n="press.h2">언론이 주목한 ASKOVISA</h2>
       </div>
     </div>
-    <div class="press-list">
-      <a class="press-row reveal" href="https://hi-ai.kr/usecase/14/" target="_blank" rel="noopener">
-        <span class="press-idx">01</span>
+    <div class="news-list">
+      <a class="news-row reveal" href="https://hi-ai.kr/usecase/14/" target="_blank" rel="noopener">
+        <span class="news-idx">01</span>
         <span>
-          <span class="press-outlet" data-i18n="press1.outlet">홍익지능 · 2026.06.23</span>
-          <h3 class="press-title" data-i18n="press1.title">비영리 공익 변호사 단체가 만든 AI 챗봇: ASKOVISA</h3>
-          <p class="press-desc" data-i18n="press1.desc">공식 매뉴얼에 근거해 답변하고 대화 내용을 저장하지 않는 설계로, 정확성과 프라이버시를 함께 잡은 9개 언어 챗봇으로 소개됐습니다.</p>
+          <span class="news-meta" data-i18n="press1.outlet">홍익지능 · 2026.06.23</span>
+          <h3 class="news-title" data-i18n="press1.title">비영리 공익 변호사 단체가 만든 AI 챗봇: ASKOVISA</h3>
+          <p class="news-desc" data-i18n="press1.desc">공식 매뉴얼에 근거해 답변하고 대화 내용을 저장하지 않는 설계로, 정확성과 프라이버시를 함께 잡은 9개 언어 챗봇으로 소개됐습니다.</p>
         </span>
-        <span class="press-go" data-i18n="press.go">원문 보기 →</span>
+        <span class="news-go" data-i18n="press.go">원문 보기 →</span>
       </a>
-      <a class="press-row reveal" href="https://futurechosun.com/archives/144914" target="_blank" rel="noopener">
-        <span class="press-idx">02</span>
+      <a class="news-row reveal" href="https://futurechosun.com/archives/144914" target="_blank" rel="noopener">
+        <span class="news-idx">02</span>
         <span>
-          <span class="press-outlet" data-i18n="press2.outlet">더나은미래 · 2026.03.17</span>
-          <h3 class="press-title" data-i18n="press2.title">“한국인과 결혼했는데 비자는요?” 이주민·난민 전용 AI 챗봇 나왔다</h3>
-          <p class="press-desc" data-i18n="press2.desc">출입국 매뉴얼을 학습해 잘못된 정보가 체류 자격에 미칠 위험을 줄였다는 점에 주목하며, 어필이 만든 무료 다국어 챗봇을 조명했습니다.</p>
+          <span class="news-meta" data-i18n="press2.outlet">더나은미래 · 2026.03.17</span>
+          <h3 class="news-title" data-i18n="press2.title">“한국인과 결혼했는데 비자는요?” 이주민·난민 전용 AI 챗봇 나왔다</h3>
+          <p class="news-desc" data-i18n="press2.desc">출입국 매뉴얼을 학습해 잘못된 정보가 체류 자격에 미칠 위험을 줄였다는 점에 주목하며, 어필이 만든 무료 다국어 챗봇을 조명했습니다.</p>
         </span>
-        <span class="press-go" data-i18n="press.go">원문 보기 →</span>
+        <span class="news-go" data-i18n="press.go">원문 보기 →</span>
       </a>
-      <a class="press-row reveal" href="https://v.daum.net/v/20260121002333713" target="_blank" rel="noopener">
-        <span class="press-idx">03</span>
+      <a class="news-row reveal" href="https://v.daum.net/v/20260121002333713" target="_blank" rel="noopener">
+        <span class="news-idx">03</span>
         <span>
-          <span class="press-outlet" data-i18n="press3.outlet">경상일보 · 2026.01.21</span>
-          <h3 class="press-title" data-i18n="press3.title">‘이주민-선주민 소통’으로 지역 소멸 막아야</h3>
-          <p class="press-desc" data-i18n="press3.desc">지역 소멸 대응을 다루며, 어필과 협력해 선보인 외국인 법률 안내 앱 ASKOVISA를 이주민 정착 지원 사례로 언급했습니다.</p>
+          <span class="news-meta" data-i18n="press3.outlet">경상일보 · 2026.01.21</span>
+          <h3 class="news-title" data-i18n="press3.title">‘이주민-선주민 소통’으로 지역 소멸 막아야</h3>
+          <p class="news-desc" data-i18n="press3.desc">지역 소멸 대응을 다루며, 어필과 협력해 선보인 외국인 법률 안내 앱 ASKOVISA를 이주민 정착 지원 사례로 언급했습니다.</p>
         </span>
-        <span class="press-go" data-i18n="press.go">원문 보기 →</span>
+        <span class="news-go" data-i18n="press.go">원문 보기 →</span>
       </a>
     </div>
   </div>
@@ -882,6 +891,28 @@
   </div>
 </section>
 
+<section id="updates">
+  <div class="container">
+    <div class="row-head">
+      <div>
+        <span class="cap">Product Updates</span>
+        <h2 data-i18n="updates.h2">주요 업데이트</h2>
+      </div>
+    </div>
+    <div class="news-list">
+      <a class="news-row reveal" href="https://apil.or.kr/notice/1112427516" target="_blank" rel="noopener">
+        <span class="news-idx">01</span>
+        <span>
+          <span class="news-meta" data-i18n="update1.meta">공지 · 2025.12.11</span>
+          <h3 class="news-title" data-i18n="update1.title">어필이 만든 무료 AI 챗봇 ASKOVISA 앱이 출시되었습니다 (iOS·Android)</h3>
+          <p class="news-desc" data-i18n="update1.desc">사증·체류·금융 정보를 9개 언어로 안내하는 무료 AI 챗봇이 App Store와 Google Play에 정식 출시됐습니다.</p>
+        </span>
+        <span class="news-go" data-i18n="updates.go">공지 보기 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="download">
   <div class="container">
     <div class="cta-wrap reveal">
@@ -989,6 +1020,11 @@
       'press3.outlet':'경상일보 · 2026.01.21',
       'press3.title':'‘이주민-선주민 소통’으로 지역 소멸 막아야',
       'press3.desc':'지역 소멸 대응을 다루며, 어필과 협력해 선보인 외국인 법률 안내 앱 ASKOVISA를 이주민 정착 지원 사례로 언급했습니다.',
+      'updates.h2':'주요 업데이트',
+      'updates.go':'공지 보기 →',
+      'update1.meta':'공지 · 2025.12.11',
+      'update1.title':'어필이 만든 무료 AI 챗봇 ASKOVISA 앱이 출시되었습니다 (iOS·Android)',
+      'update1.desc':'사증·체류·금융 정보를 9개 언어로 안내하는 무료 AI 챗봇이 App Store와 Google Play에 정식 출시됐습니다.',
       'numlist.h2':'주요 정보 제공 분야',
       'numlist.row1':'입국 사증(비자)', 'numlist.row2':'체류자격', 'numlist.row3':'외국인등록',
       'numlist.row4':'통장 개설', 'numlist.row5':'4대 보험', 'numlist.row6':'체류 연장·변경',
@@ -1044,6 +1080,11 @@
       'press3.outlet':'Gyeongsang Ilbo · Jan 21, 2026',
       'press3.title':'Stopping regional decline through migrant–resident communication',
       'press3.desc':'On responses to regional depopulation, citing ASKOVISA — the legal guidance app for foreign residents built with APIL — as an example of settlement support.',
+      'updates.h2':'Latest Updates',
+      'updates.go':'Read the notice →',
+      'update1.meta':'Notice · Dec 11, 2025',
+      'update1.title':'ASKOVISA, APIL\'s free AI chatbot, is now available (iOS · Android)',
+      'update1.desc':'The free AI chatbot that answers visa, residence, and finance questions in nine languages launched on the App Store and Google Play.',
       'numlist.h2':'What We Cover',
       'numlist.row1':'Entry Visa', 'numlist.row2':'Residence Status', 'numlist.row3':'ARC Registration',
       'numlist.row4':'Bank Account', 'numlist.row5':'Social Insurance', 'numlist.row6':'Extension / Change',
@@ -1547,6 +1588,39 @@
       screenPlane.rotation.x = Math.PI / 2;
       screenPlane.position.set((sbb.max.x + sbb.min.x) / 2, sbb.max.y + 0.001, (sbb.max.z + sbb.min.z) / 2);
       pantallaNode.add(screenPlane);
+
+      /* ASKOVISA wordmark printed on the back panel. Drawn to a canvas so it
+         uses the same webfont as the rest of the site instead of shipping an
+         image; redrawn once the font actually loads. */
+      var markCanvas = document.createElement('canvas');
+      markCanvas.width = 1024; markCanvas.height = 200;
+      var mctx = markCanvas.getContext('2d');
+      function drawWordmark(){
+        mctx.clearRect(0, 0, markCanvas.width, markCanvas.height);
+        mctx.fillStyle = '#c9c9cc';
+        try { mctx.letterSpacing = '14px'; } catch(e){}
+        mctx.font = '700 108px "Space Grotesk", system-ui, sans-serif';
+        mctx.textAlign = 'center';
+        mctx.textBaseline = 'middle';
+        mctx.fillText('ASKOVISA', markCanvas.width / 2, markCanvas.height / 2);
+      }
+      drawWordmark();
+      var markTex = new THREE.CanvasTexture(markCanvas);
+      markTex.colorSpace = THREE.SRGBColorSpace;
+      if(document.fonts && document.fonts.ready){
+        document.fonts.ready.then(function(){ drawWordmark(); markTex.needsUpdate = true; });
+      }
+      var markW = 0.44, markH = markW * (markCanvas.height / markCanvas.width);
+      var backMark = new THREE.Mesh(
+        new THREE.PlaneGeometry(markW, markH),
+        new THREE.MeshBasicMaterial({
+          map:markTex, transparent:true, opacity:0.62, toneMapped:false,
+          side:THREE.DoubleSide, depthWrite:false
+        })
+      );
+      backMark.rotation.x = -Math.PI / 2;
+      backMark.position.set((sbb.max.x + sbb.min.x) / 2, -sbb.max.y - 0.001, (sbb.max.z + sbb.min.z) / 2);
+      pantallaNode.add(backMark);
     }
 
     var texLoader = new THREE.TextureLoader();
