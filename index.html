@@ -1613,6 +1613,7 @@
       markTex.wrapS = THREE.RepeatWrapping;
       markTex.repeat.x = -1;
       markTex.offset.x = 1;
+      markTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       if(document.fonts && document.fonts.ready){
         document.fonts.ready.then(function(){ drawWordmark(); markTex.needsUpdate = true; });
       }
@@ -1631,12 +1632,20 @@
 
     var texLoader = new THREE.TextureLoader();
     var texCache = {};
+    /* The screen is almost always seen at a slant, and that is exactly the case
+       plain mipmapping blurs worst. Anisotropic filtering is what keeps the UI
+       text readable at those angles. */
+    var maxAniso = renderer.capabilities.getMaxAnisotropy();
     function loadTex(url){
       if(texCache[url]) return Promise.resolve(texCache[url]);
       return new Promise(function(resolve){
         texLoader.load(url, function(tex){
           tex.colorSpace = THREE.SRGBColorSpace;
           tex.flipY = false;
+          tex.anisotropy = maxAniso;
+          tex.minFilter = THREE.LinearMipmapLinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          tex.generateMipmaps = true;
           tex.needsUpdate = true;
           texCache[url] = tex;
           resolve(tex);
@@ -1818,9 +1827,15 @@
     }
     animate();
 
-    renderer.domElement.classList.add('hp3d-ready');
+    /* The container is display:none until now, so every earlier sizeRenderer()
+       call measured 0 and fell back to the placeholder size — the canvas would
+       stay at that size and get stretched by CSS, which reads as a blurry
+       screen. Reveal first, then size against real layout numbers. */
     containerEl.classList.remove('hp-hidden');
     fallbackImg.classList.add('hp-hidden');
+    sizeRenderer();
+    fitCamera();
+    renderer.domElement.classList.add('hp3d-ready');
   } catch(err){
     console.warn('ASKOVISA hero 3D unavailable, using fallback photo:', err);
     setupFallback();
