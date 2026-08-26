@@ -359,6 +359,13 @@
   .footer-credit{
     margin-top:56px;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:var(--muted);
   }
+  /* Reboot Ulsan program mark — white (negative) lockup per its brand guideline,
+     which calls for the negative version once the background darkness exceeds
+     60%. Left at its own opacity rather than tinted, since recoloring it is
+     explicitly a prohibited use in that guideline. */
+  .footer-credit .program-logo{
+    display:block;width:132px;height:auto;margin-top:22px;opacity:.82;
+  }
   .footer-bottom{
     border-top:1px solid var(--line);margin-top:26px;padding-top:24px;
     font-family:var(--mono);font-size:12px;color:var(--muted-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
@@ -967,6 +974,7 @@
     <div class="footer-credit">
       ASKOVISA is Operated by Advocates for Public Interest Law<br>
       Sponsored by Hyundai Insurance
+      <img class="program-logo" src="assets/reboot-ulsan-logo-white.png" alt="Reboot Ulsan" width="900" height="108">
     </div>
     <div class="footer-bottom">
       <span data-i18n="footer.copyright">© 2026 공익법센터 어필 (APIL)</span>
