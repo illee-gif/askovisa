@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASKOVISA | 이주민·난민을 위한 AI 비자 안내 챗봇</title>
-<meta name="description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 9개 언어로 제공합니다.">
+<meta name="description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 24개 언어로 제공합니다.">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/app-icon.png">
 <meta property="og:title" content="ASKOVISA | 이주민·난민을 위한 AI 비자 안내 챗봇">
-<meta property="og:description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 9개 언어로 제공합니다.">
+<meta property="og:description" content="ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 24개 언어로 제공합니다.">
 <meta property="og:image" content="assets/og-image.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -296,10 +296,15 @@
   @media (max-width:800px){ .lang-grid{grid-template-columns:repeat(3,1fr);} }
   @media (max-width:520px){ .lang-grid{grid-template-columns:repeat(2,1fr);} }
   .lang-cell{
-    aspect-ratio:1.3;border:1px solid var(--line);margin:-1px 0 0 -1px;
+    /* Flatter than before: 24 languages in the old 1.3 ratio made this section
+       taller than the rest of the page combined. */
+    aspect-ratio:2;border:1px solid var(--line);margin:-1px 0 0 -1px;
     display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;
     font-weight:600;font-size:16px;transition:background .15s ease,color .15s ease;
   }
+  /* 24 languages + the "more coming" cell = 25, odd for 3 and 2 columns: let the
+     last cell take a whole row instead of sitting alone on the left. */
+  @media (max-width:800px){ .lang-cell--more{grid-column:1 / -1;aspect-ratio:auto;min-height:64px;} }
   .lang-cell:hover{background:var(--gold-dim);color:var(--gold);}
 
   /* ---------- Screenshot gallery ---------- */
@@ -565,7 +570,7 @@
       <div class="hero-side">
         <p data-i18n="hero.desc">
           ASKOVISA(ASK + KO + VISA)는 한국 입국 사증, 체류자격, 통장개설·4대보험 등
-          금융서비스에 관한 정확한 정보를 누구나 무료로, 9개 언어로 물어볼 수 있게
+          금융서비스에 관한 정확한 정보를 누구나 무료로, 24개 언어로 물어볼 수 있게
           만든 AI 챗봇입니다.
         </p>
         <div class="hero-btns">
@@ -607,7 +612,7 @@
         <span class="m-label" data-i18n="mosaic.aiGuide">AI 기반 정확한 안내</span>
       </div>
       <div class="m-cell">
-        <span class="m-big">9</span>
+        <span class="m-big">24</span>
         <span class="m-label" data-i18n="mosaic.languagesLabel">지원 언어</span>
       </div>
       <div class="m-cell gold">
@@ -628,7 +633,7 @@
     </p>
     <div class="purpose-foot reveal">
       <div class="stat-row">
-        <div class="stat"><b data-count="9" data-suffix="개" data-suffix-en="">0개</b><span data-i18n="about.stat1">지원 언어</span></div>
+        <div class="stat"><b data-count="24" data-suffix="개" data-suffix-en="">0개</b><span data-i18n="about.stat1">지원 언어</span></div>
         <div class="stat"><b data-count="100" data-suffix="%" data-suffix-en="%">0%</b><span data-i18n="about.stat2">무료 이용</span></div>
         <div class="stat"><b data-count="2" data-suffix="개" data-suffix-en="">0개</b><span data-i18n="about.stat3">플랫폼 iOS·Android</span></div>
       </div>
@@ -737,12 +742,12 @@
         <span class="num-bg">04</span>
         <svg class="f-icon" viewBox="0 0 24 24" fill="none" stroke="#ffd668" stroke-width="1.6"><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/><circle cx="12" cy="12" r="9"/></svg>
         <div class="tags">
-          <span class="pill">9 Languages</span>
+          <span class="pill">24 Languages</span>
         </div>
       </div>
       <div class="feature-meta">
         <h3 data-i18n="feature4.title">다국어 지원</h3>
-        <p data-i18n="feature4.desc">영어, 중국어, 베트남어, 태국어, 우즈베키스탄어, 러시아어, 아랍어, 프랑스어, 한국어까지 9개 언어를 지원합니다.</p>
+        <p data-i18n="feature4.desc">한국어·영어·중국어·러시아어·베트남어·아랍어는 물론 네팔어, 크메르어, 인도네시아어, 힌디어 등 24개 언어를 지원합니다.</p>
       </div>
     </div>
 
@@ -823,24 +828,39 @@
     <div class="row-head">
       <div>
         <span class="cap">Multilingual</span>
-        <h2 data-i18n="languages.h2">9개 언어로 소통합니다</h2>
+        <h2 data-i18n="languages.h2">24개 언어로 소통합니다</h2>
       </div>
     </div>
     <div class="lang-grid reveal">
-      <div class="lang-cell" data-greet="안녕하세요! 무엇을 도와드릴까요?" tabindex="0" role="button">한국어</div>
-      <div class="lang-cell" data-greet="Hello! How can I help you today?" tabindex="0" role="button">English</div>
-      <div class="lang-cell" data-greet="你好!有什么可以帮您的吗?" tabindex="0" role="button">中文</div>
-      <div class="lang-cell" data-greet="Xin chào! Tôi có thể giúp gì cho bạn?" tabindex="0" role="button">Tiếng Việt</div>
-      <div class="lang-cell" data-greet="สวัสดี! มีอะไรให้ช่วยไหมคะ?" tabindex="0" role="button">ภาษาไทย</div>
-      <div class="lang-cell" data-greet="Salom! Sizga qanday yordam bera olaman?" tabindex="0" role="button">Oʻzbekcha</div>
-      <div class="lang-cell" data-greet="Здравствуйте! Как я могу вам помочь?" tabindex="0" role="button">Русский</div>
-      <div class="lang-cell" data-greet="مرحباً! كيف يمكنني مساعدتك؟" tabindex="0" role="button">العربية</div>
-      <div class="lang-cell" data-greet="Bonjour ! Comment puis-je vous aider ?" tabindex="0" role="button">Français</div>
-      <div class="lang-cell" style="color:var(--muted-2);cursor:default;" data-i18n="languages.expanding">+ 계속 확장중</div>
+      <div class="lang-cell" lang="ko" data-greet="안녕하세요! 무엇을 도와드릴까요?" tabindex="0" role="button">한국어</div>
+      <div class="lang-cell" lang="en" data-greet="Hello! How can I help you today?" tabindex="0" role="button">English</div>
+      <div class="lang-cell" lang="zh" data-greet="你好!有什么可以帮您的吗?" tabindex="0" role="button">中文</div>
+      <div class="lang-cell" lang="ru" data-greet="Здравствуйте! Как я могу вам помочь?" tabindex="0" role="button">Русский</div>
+      <div class="lang-cell" lang="uz" data-greet="Salom! Sizga qanday yordam bera olaman?" tabindex="0" role="button">Oʻzbekcha</div>
+      <div class="lang-cell" lang="vi" data-greet="Xin chào! Tôi có thể giúp gì cho bạn?" tabindex="0" role="button">Tiếng Việt</div>
+      <div class="lang-cell" lang="fr" data-greet="Bonjour ! Comment puis-je vous aider ?" tabindex="0" role="button">Français</div>
+      <div class="lang-cell" lang="th" data-greet="สวัสดี! มีอะไรให้ช่วยไหมคะ?" tabindex="0" role="button">ไทย</div>
+      <div class="lang-cell" lang="ar" data-greet="مرحباً! كيف يمكنني مساعدتك؟" tabindex="0" role="button">العربية</div>
+      <div class="lang-cell" lang="ne" data-greet="नमस्ते! म तपाईंलाई कसरी मद्दत गर्न सक्छु?" tabindex="0" role="button">नेपाली</div>
+      <div class="lang-cell" lang="km" data-greet="សួស្តី! តើខ្ញុំអាចជួយអ្វីបានខ្លះសម្រាប់អ្នកថ្ងៃនេះ?" tabindex="0" role="button">ភាសាខ្មែរ</div>
+      <div class="lang-cell" lang="id" data-greet="Halo! Ada yang bisa saya bantu hari ini?" tabindex="0" role="button">Bahasa Indonesia</div>
+      <div class="lang-cell" lang="my" data-greet="မင်္ဂလာပါ! ဘာများ ကူညီပေးရမလဲ?" tabindex="0" role="button">မြန်မာဘာသာ</div>
+      <div class="lang-cell" lang="fil" data-greet="Kumusta! Paano kita matutulungan ngayon?" tabindex="0" role="button">Filipino</div>
+      <div class="lang-cell" lang="mn" data-greet="Сайн байна уу! Би танд яаж туслах вэ?" tabindex="0" role="button">Монгол хэл</div>
+      <div class="lang-cell" lang="bn" data-greet="হ্যালো! আজ আমি আপনাকে কীভাবে সাহায্য করতে পারি?" tabindex="0" role="button">বাংলা</div>
+      <div class="lang-cell" lang="ur" data-greet="السلام علیکم! میں آج آپ کی کیا مدد کر سکتا ہوں؟" tabindex="0" role="button">اردو</div>
+      <div class="lang-cell" lang="si" data-greet="ආයුබෝවන්! මට අද ඔබට උදව් කළ හැක්කේ කෙසේද?" tabindex="0" role="button">සිංහල</div>
+      <div class="lang-cell" lang="tg" data-greet="Салом! Имрӯз чӣ тавр ба шумо кӯмак карда метавонам?" tabindex="0" role="button">Тоҷикӣ</div>
+      <div class="lang-cell" lang="hi" data-greet="नमस्ते! मैं आज आपकी कैसे मदद कर सकता हूँ?" tabindex="0" role="button">हिन्दी</div>
+      <div class="lang-cell" lang="fa" data-greet="سلام! امروز چطور می‌توانم به شما کمک کنم؟" tabindex="0" role="button">فارسی</div>
+      <div class="lang-cell" lang="tet" data-greet="Olá! Oinsá mak hau bele ajuda ita-boot ohin?" tabindex="0" role="button">Tetun</div>
+      <div class="lang-cell" lang="lo" data-greet="ສະບາຍດີ! ມື້ນີ້ຂ້ອຍສາມາດຊ່ວຍເຫຼືອເຈົ້າໄດ້ແນວໃດ?" tabindex="0" role="button">ລາວ</div>
+      <div class="lang-cell" lang="am" data-greet="ሰላም! ዛሬ እንዴት ልረዳዎት እችላለሁ?" tabindex="0" role="button">አማርኛ</div>
+      <div class="lang-cell lang-cell--more" style="color:var(--muted-2);cursor:default;" data-i18n="languages.expanding">+ 계속 확장중</div>
     </div>
     <div class="greet-panel reveal">
       <span class="cap" style="margin-bottom:8px;display:block;">Try It</span>
-      <p id="greetText" data-i18n="greet.default">언어를 클릭하면 ASKOVISA가 그 언어로 인사해요 →</p>
+      <p id="greetText" dir="auto" data-i18n="greet.default">언어를 클릭하면 ASKOVISA가 그 언어로 인사해요 →</p>
     </div>
   </div>
 </section>
@@ -887,7 +907,7 @@
       <div class="step reveal">
         <div class="n mono">02</div>
         <h4 data-i18n="step2.title">언어 선택</h4>
-        <p data-i18n="step2.desc">9개 언어 중 원하는 언어를 선택하고 편하게 대화를 시작합니다.</p>
+        <p data-i18n="step2.desc">24개 언어 중 원하는 언어를 선택하고 편하게 대화를 시작합니다.</p>
       </div>
       <div class="step reveal">
         <div class="n mono">03</div>
@@ -1012,11 +1032,11 @@
   var I18N = {
     ko: {
       'pageTitle': 'ASKOVISA | 이주민·난민을 위한 AI 비자 안내 챗봇',
-      'pageDesc': 'ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 9개 언어로 제공합니다.',
+      'pageDesc': 'ASKOVISA는 공익법센터 어필이 개발한 무료 AI 챗봇으로, 한국 입국 사증, 체류자격, 금융서비스 등에 관한 정확한 정보를 24개 언어로 제공합니다.',
       'nav.about':'소개', 'nav.press':'언론', 'nav.features':'특징', 'nav.languages':'언어', 'nav.contact':'문의', 'nav.cta':'앱 다운로드',
       'hero.badge':'★ 공익법센터 어필 · 2025.12.11 출시',
       'hero.h1':'한국의 이주민과 난민을 위한<br><span class="out">사증·체류·금융</span> 안내<br>가장 똑똑한 AI 챗봇',
-      'hero.desc':'ASKOVISA(ASK + KO + VISA)는 한국 입국 사증, 체류자격, 통장개설·4대보험 등 금융서비스에 관한 정확한 정보를 누구나 무료로, 9개 언어로 물어볼 수 있게 만든 AI 챗봇입니다.',
+      'hero.desc':'ASKOVISA(ASK + KO + VISA)는 한국 입국 사증, 체류자격, 통장개설·4대보험 등 금융서비스에 관한 정확한 정보를 누구나 무료로, 24개 언어로 물어볼 수 있게 만든 AI 챗봇입니다.',
       'mosaic.bigtext':'누구나,<br>무료로,<br>24시간 언제든',
       'mosaic.evidence':'근거 제시 · 매뉴얼 캡처',
       'mosaic.aiGuide':'AI 기반 정확한 안내',
@@ -1029,7 +1049,7 @@
       'feature1.title':'정확성 우선', 'feature1.desc':'출입국·외국인정책본부의 공식 매뉴얼과 공개된 재판 자료를 학습하여, 근거에 기반한 정확한 답변을 제공합니다.',
       'feature2.title':'명확한 근거 제시', 'feature2.desc':'챗봇 답변의 근거가 되는 외국인 체류매뉴얼·사증매뉴얼 페이지를 직접 캡처하여 함께 보여줍니다.',
       'feature3.title':'완전 무료', 'feature3.desc':'비영리 단체인 공익법센터 어필이 개발하여, 이용료나 멤버십 없이 누구나 무료로 사용할 수 있습니다.',
-      'feature4.title':'다국어 지원', 'feature4.desc':'영어, 중국어, 베트남어, 태국어, 우즈베키스탄어, 러시아어, 아랍어, 프랑스어, 한국어까지 9개 언어를 지원합니다.',
+      'feature4.title':'다국어 지원', 'feature4.desc':'한국어·영어·중국어·러시아어·베트남어·아랍어는 물론 네팔어, 크메르어, 인도네시아어, 힌디어 등 24개 언어를 지원합니다.',
       'feature5.title':'현실적인 안내', 'feature5.desc':'전문 상담을 대체하지는 않지만, 기본적인 정보를 제공해 올바른 방향으로 나아갈 수 있도록 안내합니다.',
       'shots.h2':'실제 화면으로 확인하세요',
       'press.h2':'언론이 주목한 ASKOVISA',
@@ -1055,14 +1075,14 @@
       'numlist.h2':'주요 정보 제공 분야',
       'numlist.row1':'입국 사증(비자)', 'numlist.row2':'체류자격', 'numlist.row3':'외국인등록',
       'numlist.row4':'통장 개설', 'numlist.row5':'4대 보험', 'numlist.row6':'체류 연장·변경',
-      'languages.h2':'9개 언어로 소통합니다', 'languages.expanding':'+ 계속 확장중',
+      'languages.h2':'24개 언어로 소통합니다', 'languages.expanding':'+ 계속 확장중',
       'greet.default':'언어를 클릭하면 ASKOVISA가 그 언어로 인사해요 →',
       'logo.h2':'로고에 담긴 의미',
       'logo.text':'네 갈래로 뻗어나가는 별은 언어와 제도의 벽 앞에서 방향을 잃기 쉬운 이들에게 <span class="hl">가장 가까운 길을 밝혀주는 AI</span>를 상징합니다. 어디서 왔든, 어디로 향하든 — ASKOVISA는 그 별처럼 조용히 곁에서 길을 비춥니다.',
       'logo.tagline':'ONE MARK, ONE PROMISE — 정확한 안내로 길을 밝힌다',
       'steps.h2':'이렇게 이용하세요',
       'step1.title':'앱 다운로드', 'step1.desc':'App Store 또는 Google Play에서 ASKOVISA를 무료로 설치합니다.',
-      'step2.title':'언어 선택', 'step2.desc':'9개 언어 중 원하는 언어를 선택하고 편하게 대화를 시작합니다.',
+      'step2.title':'언어 선택', 'step2.desc':'24개 언어 중 원하는 언어를 선택하고 편하게 대화를 시작합니다.',
       'step3.title':'질문하기', 'step3.desc':'사증, 체류자격, 통장 개설, 4대보험 등 궁금한 내용을 자유롭게 물어봅니다.',
       'step4.title':'근거와 함께 확인', 'step4.desc':'답변의 근거가 되는 공식 매뉴얼 캡처를 함께 확인하고 다음 방향을 계획합니다.',
       'download.h2':'지금, ASKOVISA를<br>만나보세요',
@@ -1076,11 +1096,11 @@
     },
     en: {
       'pageTitle': 'ASKOVISA | Free AI Visa & Residence Chatbot for Migrants & Refugees',
-      'pageDesc': 'ASKOVISA is a free AI chatbot built by APIL that gives accurate answers on Korean entry visas, residence status, and financial services — in 9 languages.',
+      'pageDesc': 'ASKOVISA is a free AI chatbot built by APIL that gives accurate answers on Korean entry visas, residence status, and financial services — in 24 languages.',
       'nav.about':'About', 'nav.press':'Press', 'nav.features':'Features', 'nav.languages':'Languages', 'nav.contact':'Contact', 'nav.cta':'Get the App',
       'hero.badge':'★ APIL (Advocates for Public Interest Law) · Launched Dec 11, 2025',
       'hero.h1':'For migrants and refugees in Korea<br><span class="out">Visas, residence, finance</span> —<br>the smartest AI chatbot',
-      'hero.desc':'ASKOVISA (ASK + KO + VISA) is a free AI chatbot that gives anyone accurate answers on Korean entry visas, residence status, and financial services like bank accounts and social insurance — in 9 languages.',
+      'hero.desc':'ASKOVISA (ASK + KO + VISA) is a free AI chatbot that gives anyone accurate answers on Korean entry visas, residence status, and financial services like bank accounts and social insurance — in 24 languages.',
       'mosaic.bigtext':'Anyone.<br>For free.<br>24/7, anytime.',
       'mosaic.evidence':'Evidence · manual screenshots',
       'mosaic.aiGuide':'AI-powered accurate guidance',
@@ -1093,7 +1113,7 @@
       'feature1.title':'Accuracy First', 'feature1.desc':'Trained on official immigration manuals and public court records to give accurate, source-backed answers.',
       'feature2.title':'Clear Evidence', 'feature2.desc':'Every answer comes with a screenshot of the exact manual page it\'s based on.',
       'feature3.title':'Completely Free', 'feature3.desc':'Built by the non-profit APIL — no fees, no membership, free for everyone.',
-      'feature4.title':'Multilingual', 'feature4.desc':'Supports 9 languages: English, Chinese, Vietnamese, Thai, Uzbek, Russian, Arabic, French, and Korean.',
+      'feature4.title':'Multilingual', 'feature4.desc':'Supports 24 languages — from Korean, English, Chinese, Russian, Vietnamese and Arabic to Nepali, Khmer, Indonesian, Hindi and more.',
       'feature5.title':'Practical Guidance', 'feature5.desc':'Not a replacement for professional advice — but enough to point you in the right direction.',
       'shots.h2':'See It In Action',
       'press.h2':'ASKOVISA in the Media',
@@ -1119,14 +1139,14 @@
       'numlist.h2':'What We Cover',
       'numlist.row1':'Entry Visa', 'numlist.row2':'Residence Status', 'numlist.row3':'ARC Registration',
       'numlist.row4':'Bank Account', 'numlist.row5':'Social Insurance', 'numlist.row6':'Extension / Change',
-      'languages.h2':'We Speak 9 Languages', 'languages.expanding':'+ More coming soon',
+      'languages.h2':'We Speak 24 Languages', 'languages.expanding':'+ More coming soon',
       'greet.default':'Click a language and ASKOVISA will greet you in it →',
       'logo.h2':'What Our Logo Means',
       'logo.text':'A four-pointed star reaching outward represents <span class="hl">an AI that lights the nearest path</span> for those who lose their way at the wall of language and bureaucracy. Wherever you\'re from, wherever you\'re headed — ASKOVISA quietly lights the way, like that star.',
       'logo.tagline':'ONE MARK, ONE PROMISE — Lighting the way with accurate guidance',
       'steps.h2':'How It Works',
       'step1.title':'Download the App', 'step1.desc':'Install ASKOVISA for free from the App Store or Google Play.',
-      'step2.title':'Choose Your Language', 'step2.desc':'Pick from 9 languages and start chatting comfortably.',
+      'step2.title':'Choose Your Language', 'step2.desc':'Pick from 24 languages and start chatting comfortably.',
       'step3.title':'Ask a Question', 'step3.desc':'Ask anything about visas, residence status, bank accounts, or insurance.',
       'step4.title':'See the Source', 'step4.desc':'Check the official manual screenshot behind each answer and plan your next step.',
       'download.h2':'Meet ASKOVISA<br>today',
